@@ -1,0 +1,4 @@
+--from sys user
+
+GRANT CREATE JOB TO maps;
+GRANT CREATE SEQUENCE TO maps;

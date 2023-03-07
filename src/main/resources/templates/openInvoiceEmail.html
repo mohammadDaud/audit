@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<title th:remove="all">[LogibizTech] Open Invoice</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div style='color: black;font-family: Calibri;padding:10px 50px;'>
+		<div style='float:left'><span style='color:#005A7F;font-weight:bolder;font-size: 22px;color:#005a7f;'>Invoice
+				Number:&nbsp;<span style='color:#212529;' th:text='${invoiceId}'></span ></span>
+			<br><br><span style='font-size: 20px;line-height: 2;color:#212529;'><b><u>Invoice
+						Details:</u></b></span><br>
+			<span style='font-size: 16px;color:#212529;'><b>Invoice Date:</b> &nbsp;<span
+					th:text='${invoiceDate}'></span></span><br><span style='font-size: 16px;color:#212529;'><b>Date
+					due:</b> &nbsp;<span th:text='${dueDate}'></span></span><br>
+			<span style='font-size: 16px;color:#212529;'><b>Expiry Date:</b> &nbsp; <span
+					th:text='${expiryDate}'></span></span><br>
+			<br><span style='font-size: 16px;color:#212529;'>Due Amount:&nbsp;
+			
+			<span
+					th:text='${currency}'></span >&nbsp;
+			
+			<span
+					th:text='${totalAmount}'></span >
+			</span><br><br>
+
+			<button
+				style='background-color: #005A7F; width:40%;height:38px;border-radius:10px;font-family: Calibri;font-weight: bold;font-size:18px;color:white;border:0px solid white;'><a
+					th:href='${qrData}' style='text-decoration:none;color:white;'>Click Here to Pay Invoice
+				</a></button><br><br>
+		</div>
+		<div style='float: right;'><img th:src="|cid:${contentLogo}|" style='width: 140px;margin-left: 20px;'
+				alt=''><br>
+			<img th:src="|cid:${contentId}|" style='width: 185px;' alt=''><br><span
+				style='font-size: 14px; margin-left: 25px;color:#212529;'>Scan the QR Code to pay</span>
+		</div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<span style='font-weight: bolder;font-size: 15px;text-decoration: underline;color:#212529;'>Thanks for your
+			business!</span>
+	</div>
+</body>

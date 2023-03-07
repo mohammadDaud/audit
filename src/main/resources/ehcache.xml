@@ -1,0 +1,110 @@
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true"
+	monitoring="autodetect" dynamicConfig="true">
+
+	<!-- By default, Ehcache stored the cached files in temp folder. -->
+	<diskStore path="java.io.tmpdir" />
+
+	<!-- Ask Ehcache to store cache in this path -->
+	<!--<diskStore path="c:\\cache" /> -->
+
+	<!-- Sample cache named terminalProcessing This cache contains a maximum 
+		in memory of 10000 elements, and will expire an element if it is idle for 
+		more than 6 hr and lives for more than 24 minutes. If there are more than 
+		10000 elements it will overflow to the disk cache, which in this configuration 
+		will go to wherever java.io.tmp is defined on your system. On a standard 
+		Linux system this will be /tmp" -->
+	<cache name="terminal-tranportal-merchant" maxEntriesLocalHeap="10000"
+		maxEntriesLocalDisk="1000" eternal="false" diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="21600" timeToLiveSeconds="43200"
+		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
+		<persistence strategy="localTempSwap" />
+	</cache>
+	<cache name="brand-config" maxEntriesLocalHeap="10000"
+		maxEntriesLocalDisk="1000" eternal="false" diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="21600" timeToLiveSeconds="43200"
+		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
+		<persistence strategy="localTempSwap" />
+	</cache>
+	<cache name="key-store-password" maxEntriesLocalHeap="10000"
+		maxEntriesLocalDisk="1000" eternal="false" diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="21600" timeToLiveSeconds="43200"
+		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
+	</cache>
+	<cache name="encrypt-value" maxEntriesLocalHeap="1000"
+		maxEntriesLocalDisk="100" eternal="false" diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="600" timeToLiveSeconds="900"
+		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
+	</cache>
+	<cache name="user-menu" maxEntriesLocalHeap="1000"
+		maxEntriesLocalDisk="100" eternal="false" diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="600" timeToLiveSeconds="900"
+		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
+		<persistence strategy="localTempSwap" />
+	</cache>
+	<cache name="original-transaction" maxEntriesLocalHeap="1000"
+		maxEntriesLocalDisk="100" eternal="false" diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="600" timeToLiveSeconds="900"
+		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
+	</cache>
+	<cache name="transaction-details" maxEntriesLocalHeap="1000"
+		maxEntriesLocalDisk="100" eternal="false" diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="600" timeToLiveSeconds="900"
+		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
+		<persistence strategy="localTempSwap" />
+	</cache>
+
+	<cache name="terminal-terminal-id" maxEntriesLocalHeap="1000"
+		maxEntriesLocalDisk="100" eternal="false" diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="600" timeToLiveSeconds="900"
+		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
+		<persistence strategy="localTempSwap" />
+	</cache>
+	<cache name="decrypt-value" maxEntriesLocalHeap="1000"
+		maxEntriesLocalDisk="100" eternal="false" diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="600" timeToLiveSeconds="900"
+		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
+	</cache>
+	<cache name="all-products" maxEntriesLocalHeap="1000"
+		maxEntriesLocalDisk="1000" eternal="false" diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="86400" timeToLiveSeconds="86400"
+		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
+		<persistence strategy="localTempSwap" />
+	</cache>
+	<cache name="all-menu" />
+	<cache name="all-users" />
+	<cache name="all-ops-users"/>
+	<cache name="all-mrch-users"/>
+	<cache name="all-user-role" />
+	<cache name="all-cof-cust" />
+	<cache name="all-declined" />
+	<cache name="all-mrch-role" />
+	<cache name="all-country" />
+	<cache name="all-currency" />
+	<cache name="all-Inst"/>
+	<cache name="all-merchant"/>
+	<cache name="all-negative" />
+	<cache name="all-negative-ip" />
+	<cache name="all-negative-bin" />
+	<cache name="key-store" />
+	<cache name="manage-column" />
+	<cache name="all-risk" />
+	<cache name="all-terminal" />
+	<cache name="all-connections" />
+	<cache name="all-payment-instrmnt" />
+	<cache name="all-brand-type" />
+	<cache name="all-brand" />
+	<cache name="all-mca-group" />
+	<cache name="all-faq" />
+	<cache name="all-news"/>
+	<cache name="all-guidelines"/>
+	<defaultCache
+		maxEntriesLocalHeap="100"
+		maxEntriesLocalDisk="100" eternal="false" diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="86400" timeToLiveSeconds="86400"
+		memoryStoreEvictionPolicy="LFU" transactionalMode="off">
+		<persistence strategy="localTempSwap" />
+	</defaultCache>
+
+</ehcache>

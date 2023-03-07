@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<title th:remove="all">[LogibizTech] Invoice</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div style='color: black;font-family: Calibri;padding:10px 50px;'>
+		<div style='float:left'><span style='color:#005A7F;font-weight:bolder;font-size: 22px;color:#005a7f;'>Invoice
+				Number:&nbsp;<span style='color:#212529;' th:text='${invoiceId}'></span ></span>
+			<br><br><span style='font-size: 20px;line-height: 2;color:#212529;'><b><u>Invoice
+						Details:</u></b></span><br>
+			<span style='font-size: 16px;color:#212529;'><b>Invoice Date:</b> &nbsp;<span
+					th:text='${invoiceDate}'></span></span><br><span style='font-size: 16px;color:#212529;'><b>Date
+					due:</b> &nbsp;<span th:text='${dueDate}'></span></span><br>
+			<span style='font-size: 16px;color:#212529;'><b>Expiry Date:</b> &nbsp; <span
+					th:text='${expiryDate}'></span></span><br>
+			<br><span style='font-size: 16px;color:#212529;'>Due Amount:&nbsp;
+			
+			<span
+					th:text='${currency}'></span >&nbsp;
+			
+			<span
+					th:text='${totalAmount}'></span >
+			</span><br><br>
+
+			<button
+				style='background-color: #005A7F; width:40%;height:38px;border-radius:10px;font-family: Calibri;font-weight: bold;font-size:18px;color:white;border:0px solid white;'><a
+					th:href='${qrData}' style='text-decoration:none;color:white;'>Click Here to Pay Invoice
+				</a></button><br><br>
+		</div>
+		<div style='float: right;'><img th:src="|cid:${contentLogo}|" style='width: 140px;margin-left: 20px;'
+				alt=''><br>
+			<img th:src="|cid:${contentId}|" style='width: 185px;' alt=''><br><span
+				style='font-size: 14px; margin-left: 25px;color:#212529;'>Scan the QR Code to pay</span>
+		</div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<span style='font-weight: bolder;font-size: 28px;color:#212529;'>Service Items</span><br>
+		<table style='width: 100%; border-collapse: collapse;'>
+			<tr style='border-bottom:2px solid black; text-align: left; font-size:12px'>
+				<th style='width: 40%;text-align: left'>Description</th>
+				<th style='text-align: right;width: 15%;'>Quantity</th>
+				<th style='text-align: right;width: 15%;'>Price</th>
+				<th style='text-align: right;width: 15%;'>Tax%</th>
+				<th style='text-align: right;width: 15%;'>Amount</th>
+			</tr>
+			<tr style='text-align: right;' th:each="row: ${product}">
+				<td style='text-align: left;' th:text="${row.desc}"></td>
+				<td th:text="${row.quantity}"></td>
+				<td th:text="${row.price} % 1 == 0? ${row.price} :${#numbers.formatDecimal(row.price, 0, 2)}"></td>
+				<td th:text="${row.tax} % 1 == 0? ${row.tax} :${#numbers.formatDecimal(row.tax, 0, 2)}"></td>
+				<td th:with="result = ${(row.price * row.quantity)+(((row.price * row.quantity)*row.tax)/100)}"
+					th:text="${result}  % 1 == 0? ${result} :${#numbers.formatDecimal(result, 0, 2)}"></td>
+			</tr>
+			<tr style='text-align: right'>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>Total</th>
+				<td th:text="${total} % 1 == 0? ${total} :${#numbers.formatDecimal(total, 0, 2)}"></td>
+			</tr>
+			<tr style='text-align: right'>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>Discount</th>
+				<td th:text="${discount} % 1 == 0? ${discount} :${#numbers.formatDecimal(discount, 0, 2)}"></td>
+			</tr>
+			<tr style='text-align: right'>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>Net Total</th>
+				<th th:with="result = ${(totalAmount-discount)}"
+					th:text="${result}  % 1 == 0? ${result} :${#numbers.formatDecimal(result, 0, 2)}">
+				</th>
+			</tr>
+		</table><br><span style='font-weight: bolder;font-size: 20px;color:#212529;'>Memos</span><br>
+		<span style='font-size:16px;color:#212529;' th:text="${memos}"></span>
+		<hr>
+		<br><span style='font-weight: bolder;font-size: 20px;color:#212529;'>Terms and Conditions</span><br>
+		<span style='font-size:16px;color:#212529;' th:text="${terms}"></span>
+		<hr><br><br>
+		<span style='font-weight: bolder;font-size: 15px;text-decoration: underline;color:#212529;'>Thanks for your
+			business!</span>
+	</div>
+</body>

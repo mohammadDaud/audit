@@ -1,0 +1,120 @@
+spring:
+  datasource:
+    #  username: maps
+    #  driver-class-name: oracle.jdbc.driver.OracleDriver
+    #  url: jdbc:oracle:thin:@db01.internal.logibiztech.com:1539/XEPDB1
+    #  password: aPs@123456789
+     hikari:
+       pool-name: maps  
+     jndi-name: java:comp/env/jdbc/maps
+#  profiles: staging-prod
+  liquibase:
+    #  user: maps
+    #  url: jdbc:oracle:thin:@db01.internal.logibiztech.com:1539/XEPDB1
+    #  password: aPs@123456789
+      enabled: true
+      change-log: classpath:db/changelog/db.changelog-master.xml
+
+  jmx:
+    enabled: false
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  thymeleaf:
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
+    enabled: true
+
+#default project info followed by actual injected pom-specified values.
+project:
+  name: maps
+  version: 0.1
+  description: MAPS
+
+info:
+  build:
+    artifact: ${project.artifactId}
+    name: ${project.name}
+    description: ${project.description}
+    version: ${project.version}
+
+spring.jpa:
+  hibernate.ddl-auto: none
+  show-sql: true
+
+allowed-origin: https://staging.logibiztech.com:8777,https://staging.logibiztech.com,https://localhost:4232,http://localhost:4232,https://app01:8443,https://localhost:8443
+allowed-method: GET,POST,PUT,DELETE,OPTIONS
+
+jwt.secret: logibiztech
+
+jwt.token.validity-in-sec: 36000
+
+google.recaptcha.secret.key: 6LeQPswZAAAAAIgUnU0hdG5U__JXCDlVyui3Qo8H
+google.recaptcha.verify.url: https://www.google.com/recaptcha/api/siteverify
+
+# Email
+spring.mail:
+  host: smtp.gmail.com
+  port: 587
+  username: logibiztechnologies@gmail.com
+  password: mifocwrbletqjksm
+#  logibiz123
+
+# Other properties
+spring.mail.properties.mail.smtp:
+  auth: true
+  connectiontimeout: 5000
+  timeout: 5000T
+  writetimeout: 5000
+  proxy.host: 192.168.100.1
+  proxy.port: 3128  
+  proxy.user: proxyuser
+  proxy.password: proxypwd
+  starttls.enable: true
+
+# TLS , port 587
+spring.mail.properties.mail.smtp.starttls.enable: true
+
+merch-portal-base-url: https://staging.logibiztech.com/merchant
+operation-portal-base-url: https://staging.logibiztech.com/operation
+admin-portal-base-url: https://staging.logibiztech.com/admin
+merchant-portal-base-url: https://staging.logibiztech.com/merchant
+forgot-password-expiry-period: 1
+
+logo-file-location: /logo
+
+audit.enable: true
+
+#encryption
+secret-key: secret
+salt: salt
+key-store-Location: /home/deploy/keyStore/
+aes-iv-key: 1234567812345678
+
+merchant-user-email-body: Dear %s,<br> <br> Your account has been created. Kindly login on given link <br><br> Portal link:&nbsp; %s<br> User Id:&nbsp; %s<br> Inst Id:&nbsp; %s<br> Merchant Id:&nbsp; %s<br>Password :&nbsp;%s <br><br> Regards,<br>LogiBiz Team
+
+merchant-branding-file-location: /home/maps/Documents/MerchantBranding/
+
+transaction.base.url: https://app01.logibiztech.com:8443/transaction
+transaction.username: logibiztech
+transaction.password: log!123#
+
+transaction.rule.terminal-config-file: rules/terminal-config.drl
+transaction.rule.card-config-file: rules/card-config.drl
+
+invoice-email-url: https://staging.logibiztech.com:8777/maps/external
+
+logo-path: /home/deploy/config/logo.png
+
+###################Schedular############
+schedular.webhook.notification: 0 0 0,12 * * ?
+recurring.stage.payment.cron-expression: 23 30 0 * * ?
+schedular.update.due.expired.invoice.status: 0 30 0 * * ?
+
+#logback log level
+log.level: DEBUG
+
+spring.cache.jcache.config: classpath:ehcache.xml

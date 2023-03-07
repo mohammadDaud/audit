@@ -1,0 +1,123 @@
+server:
+  port: 8073
+
+spring:
+  datasource:
+    username: ams
+    driver-class-name: oracle.jdbc.driver.OracleDriver    
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    password: aPs@123456
+  liquibase:
+    user: ams
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    password: aPs@123456
+  
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+
+    
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  thymeleaf:
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
+    enabled: true
+
+
+#default project info followed by actual injected pom-specified values.
+project:
+  name: maps
+  version: 0.1
+  description: MAPS
+
+info:
+  build:
+    artifact: ${project.artifactId}
+    name: ${project.name}
+    description: ${project.description}
+    version: ${project.version}
+
+spring.jpa:
+  hibernate.ddl-auto: none
+  show-sql: false
+
+allowed-origin: https://logibiztech.com,http://localhost:4210,http://localhost:4211,http://localhost:4212,http://localhost:4206,https://web.logibiztech.com:8443,http://localhost:4200,http://localhost:4231,http://localhost:4230
+allowed-method: GET,POST,PUT,DELETE,OPTIONS
+
+jwt.secret: logibiztech
+
+jwt.token.validity-in-sec: 36000
+
+google.recaptcha.secret.key: 6LeQPswZAAAAAIgUnU0hdG5U__JXCDlVyui3Qo8H
+google.recaptcha.verify.url: https://www.google.com/recaptcha/api/siteverify
+
+# Email
+spring.mail:
+  host: smtp.gmail.com
+  port: 587
+  username: logibiztechnologies@gmail.com
+  password: mifocwrbletqjksm
+#   logibiz123
+
+# Other properties
+spring.mail.properties.mail.smtp:
+  auth: true
+  connectiontimeout: 5000
+  timeout: 5000T
+  writetimeout: 5000
+  proxy.host: 192.168.100.1
+  proxy.port: 3128  
+  proxy.user: proxyuser
+  proxy.password: proxypwd
+  starttls.enable: true
+
+
+#logibiz-portal-base-url: https://logibiztech.com/merchant
+
+merch-portal-base-url: http://localhost:4202
+operation-portal-base-url: http://localhost:4201
+admin-portal-base-url: http://localhost:4200
+
+forgot-password-expiry-period: 1
+
+logo-file-location: /logo
+
+audit.enable: true
+
+#encryption
+secret-key: secret
+salt: salt
+key-store-Location: O:\\Shared\\keyStore\\
+aes-iv-key: 1234567812345678
+
+merchant-user-email-body: Dear %s,<br> <br> Your account has been created. Kindly login on given link <br><br> Portal link:&nbsp; %s<br> User Id:&nbsp; %s<br> Inst Id:&nbsp; %s<br> Merchant Id:&nbsp; %s<br>Password :&nbsp;%s <br><br>Tran Portal ID :&nbsp;%s <br>Terminal Password :&nbsp;%s <br><br> Regards,<br>LogiBiz Team
+
+merchant-branding-file-location: /home/anamh/Documents/MerchantBranding/
+
+transaction.base.url: http://localhost:8082/transaction
+transaction.username: logibiztech
+transaction.password: log!123#
+
+invoice-email-url: https://web.logibiztech.com:8443/external
+logo-path: ./src/invoice/logo.png
+invoice-email-logo: ./src/invoice/logo.png
+
+transaction.url: https://web.logibiztech.com:8443/transaction
+
+###################Schedular############
+schedular.webhook.notification: 0 05 1 * * ?
+recurring.stage.payment.cron-expression: 23 30 0 * * ?
+schedular.update.due.expired.invoice.status: 0 01 21 * * ?
+
+#logback log level
+log.level: DEBUG
+
+#Ehcache
+spring.cache.jcache.config: classpath:ehcache.xml
+
+#LanguageSupport
+spring.messages.basename: messages
+spring.messages.fallback-to-system-locale: true

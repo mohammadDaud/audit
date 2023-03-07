@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body th:attr="onload='loadPage()'">
+<script th:inline="javascript">
+function loadPage(){
+	var message = '[[${url}]]';
+	var url = JSON.parse(message);
+	window.location.href = url;
+}
+</script >
+</body >
+</html>

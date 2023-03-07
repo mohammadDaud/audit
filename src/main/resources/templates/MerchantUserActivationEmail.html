@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<title>[LogibizTech] User Activation</title>
+	<meta http-equiv="Cnent-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<span style='font-family: Calibri;font-size:26px;color: #3F3F3F;'><b>Logibiz Technologies</b></span><br><br>
+	<span style="font-family: Calibri;font-size: 16px;color:black;"><span style='line-height: 2;color:black;'>Hello,<br>
+			Your user account of </span><span style='color: black;'
+						th:text="${portal}"></span><span style='color: black;'> has been created, please click on the button below to activate the user.</span><br><br>
+		<button
+				style='background-color: #005A7F; width:20%;height:38px;border-radius:10px;font-family: Calibri;font-weight: bold;font-size:18px;color:white;'><a
+					th:href='${merchantPortalUrl}' style='text-decoration:none;color:white;'>Activate
+		</a></button>
+		<ul>
+			<li style='color: #3F3F3F;'><b>URL:</b> &nbsp; <a style="text-decoration:none;"
+					th:href='${portalUrl}'> &nbsp; <span th:text="${portalUrl}"></span></li>
+			<div th:if="${instId != null}">
+				<li style='color: #3F3F3F;'><b>Inst Id:</b> &nbsp;<span style='color: black;'
+						th:text="${instId}"></span>
+				</li>
+			</div>
+			<div th:if="${merchId != null}">
+				<li style='color: #3F3F3F;'><b>Merchant Id:</b> &nbsp; <span style='color: black;'
+						th:text="${merchId}"></span></li>
+			</div>
+			<li style='color: #3F3F3F;'><b>User Id:</b> &nbsp; <span style='color: black;' th:text="${userId}"></span>
+			</li>
+			<li style='color: #3F3F3F;'><b>Password:</b> &nbsp; <span style='color: black;'
+					th:text="${password}"></span></li>
+			<div th:if="${merchId != null}">
+				<li style='color: #3F3F3F;'><b>Mode:</b> &nbsp; <span style='color: black;'>&nbsp; <span style='color: black;'
+						th:text="${content}"></span></li>
+			</div>
+		</ul>
+		<span style='color:black;'>For more help, feel free to contact us at <a
+				href="mailto:info@logibiztech.com">info@logibiztech.com</a> or visit <a
+				href='https://www.logibiztech.com'>https://www.logibiztech.com</a>.</span><br><br>
+		<span style='line-height: 1.6;color:black;'>Thanks,<br> Team Logibiz</span>
+	</span>
+</body>

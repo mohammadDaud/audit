@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_ROOT" value="/opt/maps/logs" />
+	<property name="LOG_FILE_NAME" value="maps" />
+	<springProperty scope="context" name="logLevel" source="log.level" />
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="com.maps.Utility.MaskingPatternLayout">
+			<maskPattern>\"cardNumber\"\s*:\s*\"(.*?)\"</maskPattern> <!-- cardNumber JSON pattern -->
+			<maskPattern>\"cvv\"\s*:\s*\"(.*?)\"</maskPattern> <!-- cvv JSON pattern -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%-10.10thread]- %highlight(%-5level): %logger{0}.%M:%L : %msg%n</pattern>
+		</layout>
+	</appender>
+	<appender name="ROLLING-FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_ROOT}/${LOG_FILE_NAME}.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_ROOT}/${LOG_FILE_NAME}.%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+	<encoder
+			class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="com.maps.Utility.MaskingPatternLayout">
+				<maskPattern>\"cardNumber\"\s*:\s*\"(.*?)\"</maskPattern> <!-- cardNumber JSON pattern -->
+				<maskPattern>\"cvv\"\s*:\s*\"(.*?)\"</maskPattern> <!-- cvv JSON pattern -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%-10.10thread]- %highlight(%-5level): %logger{0}.%M:%L : %msg%n</pattern>
+			</layout>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ROLLING-FILE" />
+	</root>
+	<logger name="com.maps" level="${logLevel}" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ROLLING-FILE" />
+	</logger>
+</configuration>
