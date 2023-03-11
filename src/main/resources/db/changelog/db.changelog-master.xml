@@ -5,5 +5,15 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
     dbchangelog-3.8.xsd">
 
-		
+	<changeSet author="ams" id="sprint-1">
+		<tagDatabase tag="SPRINT-1" />
+	</changeSet>
+	<include file="db/changelog/release/db.changelog-sprint-1.xml" />
+
+
+
+	<changeSet author="ams" id="INITIAL-DATA">
+		<tagDatabase tag="INITIAL-DATA" />
+	</changeSet>
+	<include file="db/changelog/db.changelog-initial-data.xml" />
 </databaseChangeLog>

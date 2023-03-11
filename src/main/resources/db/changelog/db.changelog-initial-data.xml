@@ -9,164 +9,67 @@
     dbchangelog-3.8.xsd">
 
 	<property name="now" value="sysdate" dbms="oracle" />
-	<changeSet author="maps" id="US-2">
+	<changeSet author="ams" id="US-2">
 		<insert tableName="MENU">
 			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="User Management" />
 			<column name="KEY" value="MY_ACCOUNT" />
-			<column name="TYPE"
-				valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
 			<column name="URL" value="#" />
 			<column name="DISPLAY_ORDER" value="8" />
 			<column name="STATUS" value="A" />
-			<column name="MCA_ENABLE" value="0" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="1" />
-			<column name="MERCH_FLAG" value="1" />
 		</insert>
 
 		<insert tableName="MENU">
 			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="Menu" />
 			<column name="KEY" value="MENU" />
-			<column name="TYPE"
-				valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
 			<column name="URL" value="/admin/menu/list" />
 			<column name="PARENT"
 				valueComputed="(SELECT ID FROM MENU WHERE KEY='MY_ACCOUNT') " />
 			<column name="DISPLAY_ORDER" value="2" />
 			<column name="STATUS" value="A" />
-			<column name="MCA_ENABLE" value="1" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="0" />
-			<column name="MERCH_FLAG" value="0" />
+		
 		</insert>
 
 		<insert tableName="MENU">
 			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="USER ROLE" />
 			<column name="KEY" value="USER_ROLE" />
-			<column name="TYPE"
-				valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
 			<column name="URL" value="/admin/user-role/list" />
 			<column name="PARENT"
 				valueComputed="(SELECT ID FROM MENU WHERE KEY='MY_ACCOUNT') " />
 			<column name="DISPLAY_ORDER" value="3" />
 			<column name="STATUS" value="A" />
-			<column name="MCA_ENABLE" value="1" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="1" />
-			<column name="MERCH_FLAG" value="1" />
 		</insert>
 
 		<insert tableName="MENU">
 			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="Map Menu to Role" />
 			<column name="KEY" value="MAP_MENU_TO_ROLE" />
-			<column name="TYPE"
-				valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
 			<column name="URL" value="/admin/role-menu-mapping" />
 			<column name="PARENT"
 				valueComputed="(SELECT ID FROM MENU WHERE KEY='MY_ACCOUNT') " />
 			<column name="DISPLAY_ORDER" value="4" />
 			<column name="STATUS" value="A" />
-			<column name="MCA_ENABLE" value="1" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="1" />
-			<column name="MERCH_FLAG" value="1" />
 		</insert>
 
 		<insert tableName="MENU">
 			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="USER" />
 			<column name="KEY" value="USER" />
-			<column name="TYPE"	valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
 			<column name="URL" value="/admin/user/list" />
 			<column name="PARENT" valueComputed="(SELECT ID FROM MENU WHERE KEY='MY_ACCOUNT') " />
 			<column name="DISPLAY_ORDER" value="5" />
 			<column name="STATUS" value="A" />
-			<column name="MCA_ENABLE" value="1" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="1" />
-			<column name="MERCH_FLAG" value="1" />
 		</insert>
 
-		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
-			<column name="NAME" value="Configuration" />
-			<column name="KEY" value="CONFIGURATION" />
-			<column name="TYPE"	valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
-			<column name="URL" value="#" />
-			<column name="DISPLAY_ORDER" value="101" />
-			<column name="STATUS" value="A" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="1" />
-			<column name="MERCH_FLAG" value="0" />
-		</insert>
-
-		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
-			<column name="NAME" value="Institution" />
-			<column name="KEY" value="INSTITUTION" />
-			<column name="TYPE" valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
-			<column name="URL" value="/configuration/institution/list" />
-			<column name="PARENT" valueComputed="(SELECT ID FROM MENU WHERE KEY='CONFIGURATION') " />
-			<column name="DISPLAY_ORDER" value="1" />
-			<column name="STATUS" value="A" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="0" />
-			<column name="MERCH_FLAG" value="0" />
-		</insert>
-
-		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
-			<column name="NAME" value="Password Configuration" />
-			<column name="KEY" value="PASSWORD_CONFIGURATION" />
-			<column name="TYPE" valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
-			<column name="URL" value="/configuration/password-configuration" />
-			<column name="PARENT" valueComputed="(SELECT ID FROM MENU WHERE KEY='CONFIGURATION') " />
-			<column name="DISPLAY_ORDER" value="2" />
-			<column name="STATUS" value="A" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="1" />
-			<column name="MERCH_FLAG" value="1" />
-		</insert>
 		
-		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
-			<column name="NAME" value="BRAND Type" />
-			<column name="KEY" value="BRAND" />
-			<column name="TYPE" valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
-			<column name="URL" value="/configuration/brand-type/list" />
-			<column name="PARENT" valueComputed="(SELECT ID FROM MENU WHERE KEY='CONFIGURATION') " />
-			<column name="DISPLAY_ORDER" value="3" />
-			<column name="STATUS" value="A" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="1" />
-			<column name="MERCH_FLAG" value="0" />
-		</insert>
-
 		<insert tableName="USER_ROLE">
 			<column name="ID" valueComputed="user_role_seq.NEXTVAL" />
 			<column name="ROLE_NAME" value="ADMIN" />
-			<column name="USER_TYPE"
-				valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
 			<column name="CREATED_ON" valueDate="${now}" />
 			<column name="CREATED_BY" value="SYSTEM" />
-			<column name="INST_ID" value="0" />
-			<column name="HIDDEN_FLAG" value="0" />
 		</insert>
-
-		<insert tableName="USER_ROLE">
-			<column name="ID" valueComputed="user_role_seq.NEXTVAL" />
-			<column name="ROLE_NAME" value="ADMIN_VIEW" />
-			<column name="USER_TYPE"
-				valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
-			<column name="CREATED_ON" valueDate="${now}" />
-			<column name="CREATED_BY" value="SYSTEM" />
-			<column name="INST_ID" value="0" />
-			<column name="HIDDEN_FLAG" value="0" />
-		</insert> 
 
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
@@ -196,153 +99,38 @@
 			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='USER') " />
 		</insert>
 
-		<insert tableName="ROLE_PRIVILEGE">
-			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
-			<column name="ACTION" value=""/>
-			<column name="USER_ROLE_ID"	valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN_VIEW') " />
-			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='USER') " />
-		</insert>
-
-		<insert tableName="ROLE_PRIVILEGE">
-			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
-			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_ID" valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='INSTITUTION') " />
-		</insert>
-		
-		<insert tableName="ROLE_PRIVILEGE">
-			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
-			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_ID" valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='PASSWORD_CONFIGURATION') " />
-		</insert>
-				
-		<insert tableName="ROLE_PRIVILEGE">
-			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
-			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_ID" valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='BRAND') " />
-		</insert>
 		
 		<insert tableName="USER_DETAILS">
 			<column name="ID" valueComputed="user_details_seq.NEXTVAL" />
 			<column name="USER_ID" value="ADMINM" />
 			<column name="USER_NAME" value="ADMIN" />
-			<column name="USER_TYPE"
-				valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
 			<column name="USER_ROLE_ID"
 				valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
 			<column name="CREATED_BY" value="SYSTEM" />
 			<column name="CREATED_ON" valueDate="${now}" />
 			<column name="USER_STATUS" value="ACTIVE" />
-			<column name="ADMIN_FLAG" value="1" />
 			<column name="USER_BLOCKED" value="0" />
-			<column name="USER_CARD_MASKING" value="0" />
-			<column name="USER_DASH_BOARD_FLAG" value="0" />
-	        <column name="MCA_TYPE"  value="M"/>
-	        <column name="UNIVERSAL"  value="1"/>
-	        <column name="HIDDEN_FLAG" value="0" />
 			<column name="PASSWORD"
 				value="$2a$10$fbFrdHp0Ni2cx/K71FHs6uIg/gqPBqdaaCjR3/j1VWB3M.bwqeV7m" />
 		</insert>
-		
-		<insert tableName="USER_DETAILS">
-			<column name="ID" valueComputed="user_details_seq.NEXTVAL" />
-			<column name="USER_ID" value="ADMINC" />
-			<column name="USER_NAME" value="ADMINC" />
-			<column name="USER_TYPE"
-				valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
-			<column name="USER_ROLE_ID"
-				valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN_VIEW') " />
-			<column name="CREATED_BY" value="SYSTEM" />
-			<column name="CREATED_ON" valueDate="${now}" />
-			<column name="USER_STATUS" value="ACTIVE" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="USER_BLOCKED" value="0" />
-			<column name="USER_CARD_MASKING" value="0" />
-			<column name="USER_DASH_BOARD_FLAG" value="0" />
-	        <column name="MCA_TYPE"  value="C"/>	 
-	        <column name="UNIVERSAL"  value="1"/>  
-	        <column name="HIDDEN_FLAG" value="0" />   
-			<column name="PASSWORD"
-				value="$2a$10$fbFrdHp0Ni2cx/K71FHs6uIg/gqPBqdaaCjR3/j1VWB3M.bwqeV7m" />
-		</insert>
-		
 			<insert tableName="MENU">
 			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="Report" />
 			<column name="KEY" value="REPORT" />
-			<column name="TYPE"	valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
 			<column name="URL" value="#" />
 			<column name="DISPLAY_ORDER" value="6" />
 			<column name="STATUS" value="A" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="1" />
-			<column name="MERCH_FLAG" value="1" />
 		</insert>
 
 		<insert tableName="MENU">
 			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
-			<column name="NAME" value="Login History" />
-			<column name="KEY" value="LOGIN_HISTORY" />
-			<column name="TYPE" valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
-			<column name="URL" value="/report/login-history" />
-			<column name="PARENT" valueComputed="(SELECT ID FROM MENU WHERE KEY='REPORT') " />
-			<column name="DISPLAY_ORDER" value="1" />
-			<column name="STATUS" value="A" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="1" />
-			<column name="MERCH_FLAG" value="1" />
-		</insert>
-		
-		<insert tableName="ROLE_PRIVILEGE">
-			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
-			<column name="ACTION" value=""/>
-			<column name="USER_ROLE_ID" valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='LOGIN_HISTORY') " />
-		</insert>
-		
-		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
-			<column name="NAME" value="External Connection" />
-			<column name="KEY" value="EXTERNAL_CONNECTION" />
-			<column name="TYPE" valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
-			<column name="URL" value="/configuration/external-connection/list" />
-			<column name="PARENT" valueComputed="(SELECT ID FROM MENU WHERE KEY='CONFIGURATION') " />
-			<column name="DISPLAY_ORDER" value="4" />
-			<column name="STATUS" value="A" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="0" />
-			<column name="MERCH_FLAG" value="0" />
-		</insert>
-		
-		<insert tableName="ROLE_PRIVILEGE">
-			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
-			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_ID" valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='EXTERNAL_CONNECTION') " />
-		</insert>
-				
-		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="Audit Report" />
 			<column name="KEY" value="AUDIT_REPORT" />
-			<column name="TYPE" valueComputed="(SELECT ID FROM USER_TYPE WHERE NAME='ADMIN') " />
 			<column name="URL" value="/report/audit-report" />
 			<column name="PARENT" valueComputed="(SELECT ID FROM MENU WHERE KEY='REPORT') " />
 			<column name="DISPLAY_ORDER" value="2" />
 			<column name="STATUS" value="A" />
-			<column name="ADMIN_FLAG" value="1" />
-			<column name="OPS_FLAG" value="1" />
-			<column name="MERCH_FLAG" value="1" />
 		</insert>
-		
-		<insert tableName="ROLE_PRIVILEGE">
-			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
-			<column name="ACTION" value=""/>
-			<column name="USER_ROLE_ID" valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='AUDIT_REPORT') " />
-		</insert>
-		
+
 	</changeSet>
 </databaseChangeLog>

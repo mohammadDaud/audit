@@ -42,7 +42,7 @@ info:
 
 spring.jpa:
   hibernate.ddl-auto: none
-  show-sql: false
+  show-sql: true
 
 allowed-origin: https://logibiztech.com,http://localhost:4210,http://localhost:4211,http://localhost:4212,http://localhost:4206,https://web.logibiztech.com:8443,http://localhost:4200,http://localhost:4231,http://localhost:4230
 allowed-method: GET,POST,PUT,DELETE,OPTIONS
