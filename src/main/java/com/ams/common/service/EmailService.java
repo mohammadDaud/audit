@@ -1,4 +1,4 @@
-package com.ams.common.service;
+ package com.ams.common.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -26,14 +27,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EmailService extends ContentIdGenerator{
 
-	@Value("${from-address:logibiztechnologies@gmail.com}")
+	@Value("${from-address:ams@gmail.com}")
 	private String fromAddress;
 
-	@Value("${from-address-name:LogiBizTech}")
+	@Value("${from-address-name:AMS}")
 	private String fromAddressName;
 
 	private final JavaMailSender javaMailSender;
 
+	@Async
+	public void sendAsyncEmail(String subject, String body, String... toAddress)
+			throws MessagingException, UnsupportedEncodingException {
+		this.sendEmail(subject, body, toAddress);
+	}
+	
 	public boolean sendEmail(String subject, String body, String... toAddress)
 			throws MessagingException, UnsupportedEncodingException {
 

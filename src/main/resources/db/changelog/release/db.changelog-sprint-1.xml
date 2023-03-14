@@ -168,4 +168,32 @@
 			cycle="false" />
 		
 	</changeSet>
+	
+	<changeSet author="ams" id="ISSUES">
+		<createTable tableName="ISSUES">
+			<column name="ISSUE_NO" type="varchar(100)"/>
+			<column name="ISSUE_DESCRIPTION" type="varchar(100)"/>
+			<column name="RISK_RATING" type="varchar(255)" />
+			<column name="DEPARTMENT" type="varchar(100)"/>
+			<column name="AUDIT_YEAR" type="NUMBER(10)"/>
+			<column name="RESPONSIBLE_PERSON" type="varchar(100)"/>
+			<column name="ACTION_PLAN" type="varchar(100)"/>
+			<column name="ACTION_DATE" type="DATE"/>
+			<column name="STATUS" type="varchar(100)"/>
+			<column name="NO_OF_EXTENSION" type="NUMBER(10)"/>
+			<column name="FOLLOW_UP_RESPONSE" type="varchar(100)"/>
+			<column name="CREATED_BY" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="CREATED_ON" type="DATE">
+				<constraints nullable="false" />
+			</column>
+			<column name="MODIFIED_BY" type="varchar(255)" />
+			<column name="MODIFIED_ON" type="DATE" />
+		</createTable>
+		
+		<addPrimaryKey columnNames="ISSUE_NO" constraintName="PK_ISSUES"
+			tableName="ISSUES" validate="true" />
+		
+	</changeSet>
 </databaseChangeLog>
