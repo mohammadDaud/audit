@@ -29,9 +29,9 @@ spring:
 
 #default project info followed by actual injected pom-specified values.
 project:
-  name: maps
+  name: ams
   version: 0.1
-  description: MAPS
+  description: AMS
 
 info:
   build:
@@ -76,14 +76,14 @@ spring.mail.properties.mail.smtp:
 
 
 #logibiz-portal-base-url: https://logibiztech.com/merchant
-
+portal-login-url: http://localhost:4211
 merch-portal-base-url: http://localhost:4202
 operation-portal-base-url: http://localhost:4201
 admin-portal-base-url: http://localhost:4200
 
 forgot-password-expiry-period: 1
 
-logo-file-location: /logo
+logo-file-location: D:\\Projects\\
 
 audit.enable: true
 

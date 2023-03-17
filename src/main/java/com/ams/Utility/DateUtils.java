@@ -72,11 +72,18 @@ public class DateUtils {
 		return DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm:ss a").format(date);
 	}
 
-	public static LocalDateTime convertStringtoDate(String date) {
+	public static LocalDateTime convertStringtoLocalDateTime(String date) {
 		if (date == null) {
 			return null;
 		}
 		return LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss a"));
+	}
+	
+	public static LocalDate convertStringtoLocalDate(String date) {
+		if (date == null) {
+			return null;
+		}
+		return LocalDate.parse(date, DateTimeFormatter.ISO_DATE); //yyyy-mm-dd
 	}
 
 	public static int getCurrentYear() {

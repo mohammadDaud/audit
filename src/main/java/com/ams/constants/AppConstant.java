@@ -16,4 +16,7 @@ public interface AppConstant {
 		String MERCHANT_SIGNUP = "MERCHANT_SIGNUP";
 		String ACTION_CODE = "ACTION_CODE";
 	}
+	interface EMAIL_TEMPLATES{
+		String ISSUE_CREATION_EMAIL_TEMPLATE = "issueCreationEmail";
+	}
 }

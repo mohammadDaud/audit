@@ -36,7 +36,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @RestController
-@RequestMapping(value ="maps/admin/user")
+@RequestMapping(value ="admin/user")
 @Api(tags = { "User Controller" })
 @RequiredArgsConstructor
 public class UserController {

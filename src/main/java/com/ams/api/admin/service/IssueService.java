@@ -1,15 +1,19 @@
 package com.ams.api.admin.service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import com.ams.Utility.AppUtil;
+import com.ams.Utility.DateUtils;
 import com.ams.api.admin.entity.Issue;
 import com.ams.api.admin.entity.User;
 import com.ams.api.admin.model.IssueCreationRequest;
@@ -22,6 +26,7 @@ import com.ams.api.admin.repository.UserLoginHistoryRepository;
 import com.ams.api.admin.repository.UserRoleRepository;
 import com.ams.common.service.EmailService;
 import com.ams.common.service.MessageSourceService;
+import com.ams.constants.AppConstant;
 import com.ams.exception.ApplicationException;
 
 import lombok.RequiredArgsConstructor;
@@ -44,14 +49,14 @@ public class IssueService {
 	private final ForgotPasswordVerificationRepository forgotPasswordVerificationRepository;
 	private final int SECURITY_QUESTION_VERIFIED = 2;
 	private final int USER_ID_VERIFIED = 1;
-	private static final String RESET_PASSWORD_TEMPLATE = "resetPasswordEmail";
+	
 	private static final String USER = "all-users";
 	private static final String OPS = "all-ops-users";
 	private static final String MRCH = "all-mrch-users";
 	private final MessageSourceService messageSource;
 
-	@Value("${admin-portal-base-url}")
-	private String adminPortalBaseUrl;
+	@Value("${portal-login-url}")
+	private String portalLoginUrl;
 
 	@Value("${operation-portal-base-url}")
 	private String opsPortalBaseUrl;
@@ -71,8 +76,8 @@ public class IssueService {
 	public void createIssue(IssueCreationRequest issueCreationRequest) {
 		log.info("===========Issue Creation ===========");
 		Issue issue = new Issue(issueCreationRequest);
-		issue.setCreatedOn(LocalDateTime.now());
-		issue.setCreatedBy(AppUtil.getCurrentUser());
+		issue.setActionDate(DateUtils.convertStringtoLocalDate(issueCreationRequest.getActionDate()));
+		
 		issueRepository.save(issue);
 		log.info("===========Issue Creation ===========");
 		
@@ -91,7 +96,18 @@ public class IssueService {
 		try {
 			log.info("===========Sending email to ======{} ", user.getUserEmail());
 
-			emailService.sendEmail("New finding has been assigned to you", issue.getIssueDescription(), user.getUserEmail());
+			Context context = new Context();
+			context.setVariable("issueNo", issue.getIssueNo());
+			context.setVariable("issueDescription", issue.getIssueDescription());
+			context.setVariable("riskRating", issue.getRiskRating());
+			context.setVariable("actionPlan", issue.getActionPlan());
+			context.setVariable("actionDate", issue.getActionDate());
+			context.setVariable("evidenceUploaded", StringUtils.isNotBlank(issue.getEvidenceName()) ? "Yes": "No");
+			context.setVariable("status", issue.getStatus().name());
+			context.setVariable("portalUrl", portalLoginUrl);
+			
+			String textContext = this.templateEngine.process(AppConstant.EMAIL_TEMPLATES.ISSUE_CREATION_EMAIL_TEMPLATE, context);
+			emailService.sendEmail("New finding has been assigned to you", textContext, user.getUserEmail());
 		} catch (Exception e) {
 			e.printStackTrace();
 			//throw new ApplicationException(messageSource.getMessage(MessageSourceService.ERROR_EMAIL_SEND), e);

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<title th:remove="all">AMS</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div style='color: black;font-family: Calibri;padding:10px 50px;'>
+		<div style='float:left'>
+			<br><br>
+			<span style='font-size: 20px;line-height: 2;color:#212529;'><b><u>Issue Details:</u></b></span><br>
+			<span style='font-size: 16px;color:#212529;'><b>Issue No:</b> &nbsp;<span
+					th:text='${issueNo}'></span></span><br>
+			<span style='font-size: 16px;color:#212529;'><b>Issue Description:</b> &nbsp;<span
+					th:text='${issueDescription}'></span></span><br>
+			<span style='font-size: 16px;color:#212529;'><b>Risk Rating:</b> &nbsp;<span
+					th:text='${riskRating}'></span></span><br>
+			<span style='font-size: 16px;color:#212529;'><b>Action Plan
+					:</b> &nbsp;<span th:text='${actionPlan}'></span></span><br>
+			<span style='font-size: 16px;color:#212529;'><b>Action Date:</b> &nbsp; <span
+					th:text='${actionDate}'></span></span><br>
+			<span style='font-size: 16px;color:#212529;'><b>Evidence Uploaded:</b> &nbsp; <span
+					th:text='${evidenceUploaded}'></span></span><br>
+			<span style='font-size: 16px;color:#212529;'><b>Status:</b> &nbsp; <span
+					th:text='${status}'></span></span><br>
+			
+			<button
+				style='background-color: #005A7F; width:100%;height:38px;border-radius:10px;font-family: Calibri;font-weight: bold;font-size:18px;color:white;border:0px solid white;'><a
+					th:href='${portalUrl}' style='text-decoration:none;color:white;'>Click for action
+				</a></button><br><br>
+		</div>
+		<div style='float: right;'><img th:src="|cid:${contentLogo}|" style='width: 140px;margin-left: 20px;'
+				alt=''><br>
+			
+		</div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<span style='font-weight: bolder;font-size: 15px;text-decoration: underline;color:#212529;'>Thank you!</span>
+	</div>
+</body>

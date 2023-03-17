@@ -1,9 +1,6 @@
 package com.ams.api.admin.model;
 
-import java.util.Date;
-
-import com.ams.api.admin.entity.UserRole;
-import com.ams.model.Status;
+import com.ams.model.FindingStatus;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,9 +25,12 @@ public class IssueCreationRequest {
 
 	private String actionPlan;
 
+	//dd-mm-yyyy
 	private String actionDate;
+	
+	private String evidenceName;
 
-	private Status status;
+	private FindingStatus status;
 
 	private Integer noOfExtension;
 	private String followUpResponse;

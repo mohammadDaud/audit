@@ -63,6 +63,15 @@
 			<column name="STATUS" value="A" />
 		</insert>
 
+		<insert tableName="MENU">
+			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
+			<column name="NAME" value="FINDING" />
+			<column name="KEY" value="FINDING" />
+			<column name="URL" value="/admin/finding/add" />
+			<column name="PARENT" valueComputed="(SELECT ID FROM MENU WHERE KEY='MY_ACCOUNT') " />
+			<column name="DISPLAY_ORDER" value="5" />
+			<column name="STATUS" value="A" />
+		</insert>
 		
 		<insert tableName="USER_ROLE">
 			<column name="ID" valueComputed="user_role_seq.NEXTVAL" />
@@ -99,7 +108,12 @@
 			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='USER') " />
 		</insert>
 
-		
+		<insert tableName="ROLE_PRIVILEGE">
+			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
+			<column name="ACTION" value="A,E,D"/>
+			<column name="USER_ROLE_ID"	valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
+			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='FINDING') " />
+		</insert>
 		<insert tableName="USER_DETAILS">
 			<column name="ID" valueComputed="user_details_seq.NEXTVAL" />
 			<column name="USER_ID" value="ADMINM" />
@@ -113,7 +127,7 @@
 			<column name="PASSWORD"
 				value="$2a$10$fbFrdHp0Ni2cx/K71FHs6uIg/gqPBqdaaCjR3/j1VWB3M.bwqeV7m" />
 		</insert>
-			<insert tableName="MENU">
+		<insert tableName="MENU">
 			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="Report" />
 			<column name="KEY" value="REPORT" />

@@ -35,7 +35,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
-@RequestMapping(value = "maps/admin/user-role")
+@RequestMapping(value = "admin/user-role")
 @Api(tags = { "User-Role" })
 @RequiredArgsConstructor
 @Log4j2
@@ -68,7 +68,7 @@ public class UserRoleController {
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Get a all user role list", notes = "The user role list")
 	public AllUserRoleResponse getAllUserRole() {
-		List<UserRoleDTO> allApprovedUserRole = new ArrayList<>();
+		List<UserRoleDTO> allApprovedUserRole = userRoleService.getAllUserRole();
 		return new AllUserRoleResponse(allApprovedUserRole);
 	}
 

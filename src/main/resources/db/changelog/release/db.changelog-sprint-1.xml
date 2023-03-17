@@ -178,6 +178,7 @@
 			<column name="AUDIT_YEAR" type="NUMBER(10)"/>
 			<column name="RESPONSIBLE_PERSON" type="varchar(100)"/>
 			<column name="ACTION_PLAN" type="varchar(100)"/>
+			<column name="EVIDENCE_NAME" type="varchar(100)"/>
 			<column name="ACTION_DATE" type="DATE"/>
 			<column name="STATUS" type="varchar(100)"/>
 			<column name="NO_OF_EXTENSION" type="NUMBER(10)"/>
