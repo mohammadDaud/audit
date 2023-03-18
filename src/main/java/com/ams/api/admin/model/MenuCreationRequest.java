@@ -15,13 +15,11 @@ public class MenuCreationRequest {
 
     private String description;
     
-    private String type;
-    
     private String action;
     
     private String url;
     
-    private long parent;
+    private String parent;
     
     private String subParent;
     
@@ -29,11 +27,4 @@ public class MenuCreationRequest {
     
     private String status;
     
-    private Boolean mcaEnable;
-    
-    private boolean adminFlag;
-	
-	private boolean opsFlag;
-	
-	private boolean merchFlag;
 }

@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class MenuItem {
 
-	private long menuId;
+	private String menuKey;
 	private String action;
 }

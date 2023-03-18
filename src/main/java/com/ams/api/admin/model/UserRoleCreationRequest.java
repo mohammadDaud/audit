@@ -13,13 +13,4 @@ public class UserRoleCreationRequest {
 
     private String description;
 
-    private long userType;
-    
-    private long instId;
-    
-    private Long merchantId;
-
-    private String createdBy;
-    
-    private String updatedBy;
 }

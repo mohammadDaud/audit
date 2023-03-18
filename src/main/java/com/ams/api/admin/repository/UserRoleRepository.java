@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.ams.api.admin.entity.UserRole;
 
-public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
+public interface UserRoleRepository extends JpaRepository<UserRole, String> {
 
 	List<UserRole> findAll();
 	

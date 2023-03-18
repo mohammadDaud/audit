@@ -11,9 +11,6 @@
 	<changeSet author="ams" id="US-3">
 
 		<createTable tableName="MENU">
-			<column name="ID" type="NUMBER(10)">
-				<constraints nullable="false" />
-			</column>
 			<column name="KEY" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
@@ -25,7 +22,7 @@
 			<column name="URL" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="PARENT" type="NUMBER(10)" />
+			<column name="PARENT" type="varchar(255)" />
 			<column name="SUB_PARENT" type="varchar(255)" />
 			<column name="DISPLAY_ORDER" type="NUMBER(10)">
 				<constraints nullable="false" />
@@ -38,29 +35,20 @@
 			<column name="IMAGE_URL" type="varchar(100)" />
 		</createTable>
 
-		<addPrimaryKey columnNames="ID" constraintName="PK_MENU"
+		<addPrimaryKey columnNames="KEY" constraintName="PK_MENU"
 			tableName="MENU" validate="true" />
 
 		<addForeignKeyConstraint
 			baseColumnNames="PARENT" baseTableName="MENU"
-			constraintName="FK_PARENT_ID" referencedColumnNames="ID"
+			constraintName="FK_PARENT_ID" referencedColumnNames="KEY"
 			referencedTableName="MENU" validate="true" />
-
-		<createSequence sequenceName="menu_seq" startValue="1"
-			minValue="1" maxValue="100000000000" incrementBy="1" cycle="false" />
 
 	</changeSet>
 
 	<changeSet author="ams" id="US-5">
 
 		<createTable tableName="USER_ROLE">
-			<column name="ID" type="NUMBER(10)">
-				<constraints nullable="false" />
-			</column>
-			<column name="ROLE_NAME" type="varchar(100)">
-				<constraints nullable="false"
-					uniqueConstraintName="UQ_USER-ROLE_ROLE_NAME" unique="true" />
-			</column>
+			<column name="ROLE_NAME" type="varchar(100)"/>
 			<column name="DESCRIPTION" type="varchar(255)" />
 			<column name="CREATED_BY" type="varchar(255)">
 				<constraints nullable="false" />
@@ -72,12 +60,9 @@
 			<column name="MODIFIED_ON" type="DATE" />
 		</createTable>
 
-		<addPrimaryKey columnNames="ID"
+		<addPrimaryKey columnNames="ROLE_NAME"
 			constraintName="PK_USER_ROLE" tableName="USER_ROLE" validate="true" />
 
-			<createSequence sequenceName="user_role_seq"
-			startValue="1" minValue="1" maxValue="100000000000" incrementBy="1"
-			cycle="false" />
 	</changeSet>
 
 	<changeSet author="ams" id="US-12">
@@ -87,10 +72,10 @@
 				<constraints nullable="false" />
 			</column>
 			<column name="ACTION" type="varchar(10)" />
-			<column name="USER_ROLE_ID" type="NUMBER(10)">
+			<column name="USER_ROLE_NAME" type="varchar(100)">
 				<constraints nullable="false" />
 			</column>
-			<column name="MENU_ID" type="NUMBER(10)">
+			<column name="MENU_KEY" type="varchar(100)">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -100,13 +85,13 @@
 			validate="true" />
 
 		<addForeignKeyConstraint
-			baseColumnNames="USER_ROLE_ID" baseTableName="ROLE_PRIVILEGE"
-			constraintName="FK_PRIVILEGE_USER_ROLE_ID" referencedColumnNames="ID"
+			baseColumnNames="USER_ROLE_NAME" baseTableName="ROLE_PRIVILEGE"
+			constraintName="FK_PRIVILEGE_USER_ROLE_ID" referencedColumnNames="ROLE_NAME"
 			referencedTableName="USER_ROLE" validate="true" />
 
 		<addForeignKeyConstraint
-			baseColumnNames="MENU_ID" baseTableName="ROLE_PRIVILEGE"
-			constraintName="FK_MENU_ID" referencedColumnNames="ID"
+			baseColumnNames="MENU_KEY" baseTableName="ROLE_PRIVILEGE"
+			constraintName="FK_MENU_KEY" referencedColumnNames="KEY"
 			referencedTableName="MENU" validate="true" />
 
 		<createSequence sequenceName="role_privilege_seq"
@@ -116,19 +101,12 @@
 
 	<changeSet author="ams" id="US-6">
 		<createTable tableName="USER_DETAILS">
-			<column name="ID" type="NUMBER(10)">
-				<constraints nullable="false" />
-			</column>
-			<column name="USER_ID" type="varchar(15)">
-				<constraints nullable="false"
-					uniqueConstraintName="UQ_USER-DETAILS_USER_ID" unique="true" />
-			</column>
+			<column name="USER_ID" type="varchar(15)"/>
 			<column name="USER_NAME" type="varchar(255)">
 				<constraints nullable="false"
 					uniqueConstraintName="UQ_USER-DETAILS_USER_NAME" unique="true" />
 			</column>
-			<column name="USER_DESCRIPTION" type="varchar(255)" />
-			<column name="USER_ROLE_ID" type="NUMBER(10)">
+			<column name="USER_ROLE_ID" type="varchar(100)">
 				<constraints nullable="false" />
 			</column>
 			<column name="CREATED_BY" type="varchar(255)">
@@ -151,15 +129,14 @@
 			<column name="USER_EMAIL" type="varchar(100)" />
 			<column name="TOKEN" type="VARCHAR2(250)" />
 			<column name="IS_LOGIN" type="boolean" value="0" />
-			<column name="LOCK_USER" type="BOOLEAN(10)" value="0" />
 		</createTable>
 		
-		<addPrimaryKey columnNames="ID" constraintName="PK_USER"
+		<addPrimaryKey columnNames="USER_ID" constraintName="PK_USER"
 			tableName="USER_DETAILS" validate="true" />
 
 		<addForeignKeyConstraint
 			baseColumnNames="USER_ROLE_ID" baseTableName="USER_DETAILS"
-			constraintName="FK_USER_TEMP_ROLE_ID" referencedColumnNames="ID"
+			constraintName="FK_USER_TEMP_ROLE_NAME" referencedColumnNames="ROLE_NAME"
 			referencedTableName="USER_ROLE" validate="true" />
 
 

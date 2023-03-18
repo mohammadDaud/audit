@@ -13,6 +13,6 @@ public interface PasswordTokenRepository extends JpaRepository<PasswordResetToke
 	@Query("select p from PasswordResetToken p where p.token = :token and p.tokenType = :tokenType")
 	Optional<PasswordResetToken> findByToken(@Param("token") String token, @Param("tokenType") TokenType tokenType);
 	
-	@Query("select p from PasswordResetToken p where p.user.id = :userId and p.tokenType = :tokenType")
-	Optional<PasswordResetToken> findByUserId(@Param("userId") long userId, @Param("tokenType") TokenType tokenType);
+	@Query("select p from PasswordResetToken p where p.user.userId = :userId and p.tokenType = :tokenType")
+	Optional<PasswordResetToken> findByUserId(@Param("userId") String userId, @Param("tokenType") TokenType tokenType);
 }

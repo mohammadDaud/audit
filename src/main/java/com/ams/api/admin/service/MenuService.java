@@ -3,6 +3,7 @@ package com.ams.api.admin.service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,7 @@ public class MenuService {
 	public Menu createMenu(MenuCreationRequest menuCreationRequest) {
 		log.info("===========Menu Creation ===========");
 		Menu menu = new Menu(menuCreationRequest);
-		if (menuCreationRequest.getParent() != 0)
+		if (Objects.nonNull(menuCreationRequest.getParent()))
 			menu.setParent(getMenu(menuCreationRequest.getParent()));
 		if(isNameExist(menuCreationRequest.getName())) {
 			throw new ApplicationException(messageSource.getMessage(MessageSourceService.ALREADY_EXIST,"Menu Name"));
@@ -55,11 +56,10 @@ public class MenuService {
 	public Menu updateMenu(MenuUpdateRequest menuUpdateRequest) {
 		log.info("===========Menu Update ===========");
 		
-		Menu menu = menuRepository.findById(menuUpdateRequest.getId()).orElseThrow(() -> new ResourceNotFoundException(messageSource.getMessage(MessageSourceService.NOT_FOUND,"Menu")));
-		BeanUtils.copyProperties(menuUpdateRequest, menu, "id");
+		Menu menu = menuRepository.findByKey(menuUpdateRequest.getKey()).orElseThrow(() -> new ResourceNotFoundException(messageSource.getMessage(MessageSourceService.NOT_FOUND,"Menu")));
 		MenuEditCheck(menuUpdateRequest);
 		MenuKeyEditCheck(menuUpdateRequest);
-		if (menuUpdateRequest.getParent() != 0)
+		if (Objects.nonNull(menuUpdateRequest.getParent()))
 			menu.setParent(getMenu(menuUpdateRequest.getParent()));
 		else
 			menu.setParent(null);
@@ -68,7 +68,7 @@ public class MenuService {
 	}
 	private void MenuKeyEditCheck(MenuUpdateRequest menuUpdateRequest) {
 		Optional<Menu> menu = this.menuRepository.findByKey(menuUpdateRequest.getKey());
-		if( menu.isPresent() && menu.get().getId() != menuUpdateRequest.getId())
+		if( menu.isPresent() && menu.get().getKey() != menuUpdateRequest.getKey())
 		{
 			throw new ApplicationException(messageSource.getMessage(MessageSourceService.ALREADY_EXIST,"Menu Key"));
 			
@@ -77,7 +77,7 @@ public class MenuService {
 	
 	private void MenuEditCheck(MenuUpdateRequest menuUpdateRequest) {
 		Optional<Menu> menu = this.menuRepository.findByName(menuUpdateRequest.getName());
-		if( menu.isPresent() && menu.get().getId() != menuUpdateRequest.getId())
+		if( menu.isPresent() && menu.get().getKey() != menuUpdateRequest.getKey())
 		{
 			throw new ApplicationException(messageSource.getMessage(MessageSourceService.ALREADY_EXIST,"Menu Name"));
 			
@@ -88,18 +88,18 @@ public class MenuService {
 		return menuRepository.save(menu);
 	}
 
-	public Menu getMenu(long id) throws ResourceNotFoundException {
-		return menuRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(messageSource.getMessage(MessageSourceService.NOT_FOUND,"Menu")));
+	public Menu getMenu(String id) throws ResourceNotFoundException {
+		return menuRepository.findByKey(id).orElseThrow(() -> new ResourceNotFoundException(messageSource.getMessage(MessageSourceService.NOT_FOUND,"Menu")));
 	}
 
 	public List<MenuDTO> getAllMenuByPortal(String portal) {
-			return menuRepository.findAll(Sort.by(Sort.Direction.ASC, "id")).stream().map(MenuDTO::new)
+			return menuRepository.findAll(Sort.by(Sort.Direction.ASC, "key")).stream().map(MenuDTO::new)
 					.collect(Collectors.toList());
 		}
 	@Cacheable(cacheNames = MENU)
 	public List<MenuDTO> getAllMenu() {
 		log.info("=====Repository call ========");
-		return menuRepository.findAll(Sort.by(Sort.Direction.ASC, "id")).stream().map(MenuDTO::new)
+		return menuRepository.findAll(Sort.by(Sort.Direction.ASC, "key")).stream().map(MenuDTO::new)
 					.collect(Collectors.toList());
 	}
 
@@ -115,15 +115,17 @@ public class MenuService {
 
 	private List<MenuGroup> groupByParent(List<MenuDTO> allMenu) {
 		List<MenuGroup> menuGroupList = new ArrayList<>();
-		allMenu.sort(Comparator.comparing(MenuDTO::getParent));
+		
+		
+		allMenu.sort(Comparator.comparing(MenuDTO::getParent, Comparator.nullsFirst(Comparator.naturalOrder())));
 
 		allMenu.stream().forEach((menuDTO) -> {
-			if (menuDTO.getParent() == 0) {
+			if (Objects.isNull(menuDTO.getParent())) {
 				MenuGroup menuGroup = new MenuGroup(menuDTO);
 				menuGroupList.add(menuGroup);
 			}
 
-			Optional<MenuGroup> findFirst = menuGroupList.stream().filter(m -> m.getId() == menuDTO.getParent())
+			Optional<MenuGroup> findFirst = menuGroupList.stream().filter(m -> m.getKey() == menuDTO.getParent())
 					.findFirst();
 
 			if (findFirst.isPresent()) {
@@ -142,7 +144,7 @@ public class MenuService {
 	}
 
 	public List<MenuDTO> getAllParentMenu() {
-		return menuRepository.findByParentOrderById(null).stream().map(MenuDTO::new).collect(Collectors.toList());
+		return menuRepository.findByParentOrderByDisplayOrder(null).stream().map(MenuDTO::new).collect(Collectors.toList());
 
 	}
 	@CacheEvict(cacheNames = MENU, allEntries = true)
@@ -151,7 +153,7 @@ public class MenuService {
 		this.menuRepository.deleteById(id);
 	}
 	
-	public Optional<Menu> getMenuByKey(String menuKey) throws ResourceNotFoundException {
+	public Optional<Menu> optional(String menuKey) throws ResourceNotFoundException {
 		return menuRepository.findByKey(menuKey);
 	}
 	private boolean isNameExist(String name) {

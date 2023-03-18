@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class MenuToRoleMappingRequest {
 	
-	private long userRoleId;
+	private String userRoleName;
 	
 	private MenuItem[] menuItem;
 }

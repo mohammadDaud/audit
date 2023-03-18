@@ -34,7 +34,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @EqualsAndHashCode
-@JsonInclude(Include.NON_NULL)
 @Setter
 @Getter
 @Entity
@@ -43,46 +42,29 @@ import lombok.Setter;
 @Table(name = "USER_ROLE")
 public class UserRole{
 	
+	@Id
+	private String roleName;
 
 	public UserRole(UserRoleCreationRequest userRoleCreationRequest) {
 		BeanUtils.copyProperties(userRoleCreationRequest, this);
 	}
-	
 
-	@JsonIgnore
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_role_generator")
-	@SequenceGenerator(name = "user_role_generator", sequenceName = "user_role_seq", allocationSize = 1)
-	private long id;
-
-
-	@JsonBackReference
 	@OneToMany(mappedBy = "userRole", cascade = CascadeType.ALL, 
 			fetch = FetchType.EAGER, orphanRemoval = true) // Orphan removal true to delete mapping on clear 
 	List<UserRoleMenuMapping> assignedMenus = new ArrayList<>();
 
-	@JsonBackReference
 	@OneToMany(mappedBy = "userRole", cascade = CascadeType.MERGE)
 	List<User> users = new ArrayList<>();
 
-	@Column(nullable = false)
-	private String roleName;
-
-	
 	private String description;
 
-	@JsonIgnore
 	private String createdBy;
 
-	@JsonIgnore
 	private LocalDateTime createdOn;
 
-	@JsonIgnore
 	private String modifiedBy;
 
-	@JsonIgnore
 	private LocalDateTime modifiedOn;
-	
 	
 	@PrePersist
 	public void createdAt() {

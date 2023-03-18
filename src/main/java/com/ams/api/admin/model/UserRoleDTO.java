@@ -21,15 +21,11 @@ public class UserRoleDTO {
 
 	public UserRoleDTO(UserRole userRole) {
 		BeanUtils.copyProperties(userRole, this);
-		this.approvalStatus = "APPROVED";
-
-		// this.assignedMenuId = userRole.getAssignedMenus().stream().map((menuMapped)->
-		// menuMapped.getMenu().getId()).collect(Collectors.toList());
 
 		this.assignedMenuId = userRole.getAssignedMenus().stream().map((menuMapped) -> {
 			// return hashmap for each menu access
-			Map<Long, String> hashMap = new HashMap<>();
-			hashMap.put(menuMapped.getMenu().getId(), menuMapped.getAction());
+			Map<String, String> hashMap = new HashMap<>();
+			hashMap.put(menuMapped.getMenu().getKey(), menuMapped.getAction());
 			return hashMap;
 		}).collect(Collectors.toList());
 
@@ -39,19 +35,9 @@ public class UserRoleDTO {
 
 	}
 
-	private long id;
-
 	private String roleName;
 
 	private String description;
-
-	private String userType;
-
-	private long userTypeId;
-
-	private long instId;
-
-	private Long merchantId;
 
 	private String createdBy;
 
@@ -61,10 +47,6 @@ public class UserRoleDTO {
 
 	private String modifiedOn;
 
-	private List<Map<Long, String>> assignedMenuId;
-
-	private String approvalStatus;
-
-	private String action;
+	private List<Map<String, String>> assignedMenuId;
 
 }

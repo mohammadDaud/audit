@@ -101,21 +101,15 @@ public class UserService {
 	@Autowired
 	private TemplateEngine templateEngine;
 
-	
-	@Caching(evict = {@CacheEvict(cacheNames = USER, condition = "#userCreationRequest.getUserType() == 1", allEntries = true),
-			@CacheEvict(cacheNames = OPS,condition = "#userCreationRequest.getUserType() == 3", allEntries = true),
-			@CacheEvict(cacheNames = MRCH ,condition = "#userCreationRequest.getUserType() == 2", allEntries = true)}
-			)
-	//@LogAddAudit(module = Module.USER)
 	public User createUser(UserCreationRequest userCreationRequest) {
 		log.info("===========User Creation ===========");
 		User user = new User(userCreationRequest);
 		user.setUserRole(userRoleRepository.findById(userCreationRequest.getUserRole()).get());
 
-		user.setUserStatus(Status.INACTIVE);
+		user.setUserStatus(Status.ACTIVE);
 		user.setCreatedOn(LocalDateTime.now());
 		user.setCreatedBy(AppUtil.getCurrentUser());
-		this.saveUserPassword(userCreationRequest.getPassword(), userCreationRequest.getUserId());
+	//	this.saveUserPassword(userCreationRequest.getPassword(), userCreationRequest.getUserId());
 		userRepository.save(user);
 		sendEmailBody(userCreationRequest, user);
 		
@@ -124,7 +118,7 @@ public class UserService {
 	}
 
 	public void sendEmailBody(UserCreationRequest userCreationRequest, User user) {
-		String token = getPasswordToken(user, TokenType.USER_ACTIVATION);
+		//String token = getPasswordToken(user, TokenType.USER_ACTIVATION);
 	}
 	@Caching(evict = {@CacheEvict(cacheNames = USER, condition = "#userUpdateRequest.getUserType() == 1", allEntries = true),
 			@CacheEvict(cacheNames = OPS, condition = "#userUpdateRequest.getUserType() == 3", allEntries = true),
@@ -133,7 +127,7 @@ public class UserService {
 	//@LogUpdateAudit(module = Module.USER)
 	public User updateUser(UserUpdateRequest userUpdateRequest) {
 		log.info("===========User Update ===========");
-		User user = userRepository.findById(userUpdateRequest.getId())
+		User user = userRepository.findById(userUpdateRequest.getUserId())
 				.orElseThrow(() -> new ResourceNotFoundException(messageSource.getMessage
 						(MessageSourceService.NOT_FOUND,"User")));
 		User oldUser = new User(user);
@@ -146,14 +140,15 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
+
 	private void setUserDetails(User user, UserUpdateRequest userUpdateRequest) {
 		BeanUtils.copyProperties(userUpdateRequest, user, "id");
-		user.setUserRole(userRoleRepository.findById(userUpdateRequest.getUserRole()).get());
+		user.setUserRole(userRoleRepository.findByRoleName(userUpdateRequest.getUserRole()).get());
 		user.setUserStatus(Status.valueOf(Status.class, userUpdateRequest.getUserStatus()));
 	}
 
-	public User getUser(long id) throws ResourceNotFoundException {
-		return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(messageSource.getMessage(MessageSourceService.NOT_FOUND,"User")));
+	public User getUser(String id) throws ResourceNotFoundException {
+		return userRepository.findByUserId(id).orElseThrow(() -> new ResourceNotFoundException(messageSource.getMessage(MessageSourceService.NOT_FOUND,"User")));
 	}
 
 	public Optional<User> getUserByUserId(String userId) {
@@ -169,28 +164,15 @@ public class UserService {
 	}
 	@Cacheable(cacheNames = USER)
 	public List<UserDTO> getAllUser() {
-		return userRepository.findAll(Sort.by(Sort.Direction.ASC, "id")).stream().map(UserDTO::new)
+		return userRepository.findAll(Sort.by(Sort.Direction.ASC, "userId")).stream().map(UserDTO::new)
 				.collect(Collectors.toList());
 	}
 
 
-	/* used to delete user by user Id call in MCA flow */
-	@CacheEvict(cacheNames = {USER,OPS,MRCH}, allEntries = true)
-	@Transactional
-	public void deleteUser(String id) {
-		User user = this.getUserByUserId(id)
-				.orElseThrow(() -> new ResourceNotFoundException(messageSource.getMessage
-						(MessageSourceService.NOT_FOUND, "User Id")));
-
-		userRepository.deleteByUserId(id);
-
-	}
 
 	/* used to delete user by Id call when mca is disabled */
-	@CacheEvict(cacheNames = {USER, OPS, MRCH}, allEntries = true)
-	//@LogDeleteAudit(module = Module.USER)
 	@Transactional
-	public void deleteUser(long id) {
+	public void deleteUser(String id) {
 		User user = getUser(id);
 		userRepository.deleteById(id);
 	}
@@ -215,7 +197,7 @@ public class UserService {
 		user.setTokenExpiryDate(null);
 		user.setToken(null);
 		save(user);
-		this.updateLoginHistory(userId);
+		//this.updateLoginHistory(userId);
 	}
 
 	public boolean hasToken(String userId, String token) {
@@ -257,7 +239,7 @@ public class UserService {
 	}
 
 	private String getPasswordToken(User user, TokenType tokenType) {
-		Optional<PasswordResetToken> tokenOpt = passwordTokenRepository.findByUserId(user.getId(), tokenType);
+		Optional<PasswordResetToken> tokenOpt = passwordTokenRepository.findByUserId(user.getUserId(), tokenType);
 		String token = UUID.randomUUID().toString();
 		if (tokenOpt.isPresent()) {
 			PasswordResetToken myToken = tokenOpt.get();
@@ -340,12 +322,11 @@ public class UserService {
 		List<Map<String, String>> assignedMenu = userRole.getAssignedMenus().stream().map((menuMapped) -> {
 			// return hashmap for each menu access
 			Map<String, String> hashMap = new HashMap<>();
-			hashMap.put(String.valueOf(menuMapped.getMenu().getId()), menuMapped.getAction());
+			hashMap.put(menuMapped.getMenu().getKey(), menuMapped.getAction());
 			return hashMap;
 		}).collect(Collectors.toList());
 
 		RoleResponse roleResponse = new RoleResponse();
-		roleResponse.setRoleId(userRole.getId());
 		roleResponse.setRoleName(userRole.getRoleName());
 		roleResponse.setAssignedMenu(assignedMenu);
 		return roleResponse;
@@ -426,9 +407,6 @@ public class UserService {
 
 		UserLoginHistory userLoginHistory = UserLoginHistory.builder().user(user).loggedInTime(LocalDateTime.now())
 				.build();
-		userLoginHistory.setInstId(AppUtil.getCurrentInstIdStr());
-		userLoginHistory.setMerchId(AppUtil.getCurrentMerchantIdStr());
-
 		this.updateLoginHistory(userLoginHistory);
 
 	}

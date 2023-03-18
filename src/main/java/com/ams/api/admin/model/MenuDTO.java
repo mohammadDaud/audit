@@ -16,7 +16,7 @@ public class MenuDTO {
 	public MenuDTO(Menu menu) {
 			BeanUtils.copyProperties(menu, this);
 			if(menu.getParent() != null)
-				this.parent = menu.getParent().getId();
+				this.parent = menu.getParent().getKey();
 		}
 	 
 	private long id;
@@ -33,7 +33,7 @@ public class MenuDTO {
     
     private String url;
     
-    private long parent;
+    private String parent;
         
     private String subParent;
     

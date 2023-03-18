@@ -15,7 +15,7 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
 	
 	List<Menu> findAll(Sort sort);
 	
-	List<Menu> findByParentOrderById(Parent parent);
+	List<Menu> findByParentOrderByDisplayOrder(Parent parent);
 	
 	Optional<Menu> findByKey(String menuKey);
 	

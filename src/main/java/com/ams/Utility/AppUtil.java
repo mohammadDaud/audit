@@ -31,17 +31,7 @@ public class AppUtil {
 		return principal instanceof UserDetails ? ((UserDetails) principal).getUsername() : principal.toString();
 	}
 
-	public static long getCurrentInstId() {
-
-		RoleResponse fromString = getUserRole();
-		return fromString.getInstId();
-	}
 	
-	public static String getCurrentInstIdStr() {
-
-		RoleResponse fromString = getUserRole();
-		return fromString.getInstIdStr();
-	}
 
 	public static String getClientIpAddr(HttpServletRequest request) {
 		String ip = request.getRemoteAddr();
@@ -72,17 +62,6 @@ public class AppUtil {
 		return value.replaceAll("\\b(\\d{" + start + "})\\d+(\\d{" + end + "})", "$1*******$2");
 	}
 
-	public static long getCurrentMerchantId() {
-
-		RoleResponse fromString = getUserRole();
-		return fromString.getMerchId();
-	}
-	
-	public static String getCurrentMerchantIdStr() {
-
-		RoleResponse fromString = getUserRole();
-		return fromString.getMerchIdStr();
-	}
 
 	/**
 	 * @return
@@ -175,21 +154,6 @@ public class AppUtil {
     return total % 10 == 0;
     //]]>
 }
-	public static boolean isOps() {
-		if (getCurrentInstId() != 0 && getCurrentMerchantId() == 0 ) {
-			return true;}
-		return false;
-	}
-	public static boolean isMerchant() {
-		if (getCurrentInstId() != 0 && getCurrentMerchantId() != 0 ) {
-			return true;}
-		return false;
-	}
-	public static boolean isAdmin() {
-		if (getCurrentInstId() == 0 && getCurrentMerchantId() == 0 ) {
-			return true;}
-		return false;
-	}
 	
 	public static boolean isUserLoggedIn() {
 		if (!getCurrentUser().equals("anonymousUser")) {

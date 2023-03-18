@@ -11,70 +11,71 @@
 	<property name="now" value="sysdate" dbms="oracle" />
 	<changeSet author="ams" id="US-2">
 		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="User Management" />
 			<column name="KEY" value="MY_ACCOUNT" />
 			<column name="URL" value="#" />
-			<column name="DISPLAY_ORDER" value="8" />
+			<column name="DISPLAY_ORDER" value="1" />
+			<column name="STATUS" value="A" />
+		</insert>
+		
+		<insert tableName="MENU">
+			<column name="NAME" value="Issue Management" />
+			<column name="KEY" value="ISSUE" />
+			<column name="URL" value="#" />
+			<column name="DISPLAY_ORDER" value="2" />
 			<column name="STATUS" value="A" />
 		</insert>
 
 		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="Menu" />
 			<column name="KEY" value="MENU" />
 			<column name="URL" value="/admin/menu/list" />
 			<column name="PARENT"
-				valueComputed="(SELECT ID FROM MENU WHERE KEY='MY_ACCOUNT') " />
-			<column name="DISPLAY_ORDER" value="2" />
+				valueComputed="(SELECT KEY FROM MENU WHERE KEY='MY_ACCOUNT') " />
+			<column name="DISPLAY_ORDER" value="1" />
 			<column name="STATUS" value="A" />
 		
 		</insert>
 
 		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="USER ROLE" />
 			<column name="KEY" value="USER_ROLE" />
 			<column name="URL" value="/admin/user-role/list" />
 			<column name="PARENT"
-				valueComputed="(SELECT ID FROM MENU WHERE KEY='MY_ACCOUNT') " />
+				valueComputed="(SELECT KEY FROM MENU WHERE KEY='MY_ACCOUNT') " />
+			<column name="DISPLAY_ORDER" value="2" />
+			<column name="STATUS" value="A" />
+		</insert>
+
+		<insert tableName="MENU">
+			<column name="NAME" value="Map Menu to Role" />
+			<column name="KEY" value="MAP_MENU_TO_ROLE" />
+			<column name="URL" value="/admin/role-menu-mapping" />
+			<column name="PARENT"
+				valueComputed="(SELECT KEY FROM MENU WHERE KEY='MY_ACCOUNT') " />
 			<column name="DISPLAY_ORDER" value="3" />
 			<column name="STATUS" value="A" />
 		</insert>
 
 		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
-			<column name="NAME" value="Map Menu to Role" />
-			<column name="KEY" value="MAP_MENU_TO_ROLE" />
-			<column name="URL" value="/admin/role-menu-mapping" />
-			<column name="PARENT"
-				valueComputed="(SELECT ID FROM MENU WHERE KEY='MY_ACCOUNT') " />
+			<column name="NAME" value="USER" />
+			<column name="KEY" value="USER" />
+			<column name="URL" value="/admin/user/list" />
+			<column name="PARENT" valueComputed="(SELECT KEY FROM MENU WHERE KEY='MY_ACCOUNT') " />
 			<column name="DISPLAY_ORDER" value="4" />
 			<column name="STATUS" value="A" />
 		</insert>
 
 		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
-			<column name="NAME" value="USER" />
-			<column name="KEY" value="USER" />
-			<column name="URL" value="/admin/user/list" />
-			<column name="PARENT" valueComputed="(SELECT ID FROM MENU WHERE KEY='MY_ACCOUNT') " />
-			<column name="DISPLAY_ORDER" value="5" />
-			<column name="STATUS" value="A" />
-		</insert>
-
-		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="FINDING" />
 			<column name="KEY" value="FINDING" />
 			<column name="URL" value="/admin/finding/add" />
-			<column name="PARENT" valueComputed="(SELECT ID FROM MENU WHERE KEY='MY_ACCOUNT') " />
-			<column name="DISPLAY_ORDER" value="5" />
+			<column name="PARENT" valueComputed="(SELECT KEY FROM MENU WHERE KEY='ISSUE') " />
+			<column name="DISPLAY_ORDER" value="1" />
 			<column name="STATUS" value="A" />
 		</insert>
 		
 		<insert tableName="USER_ROLE">
-			<column name="ID" valueComputed="user_role_seq.NEXTVAL" />
 			<column name="ROLE_NAME" value="ADMIN" />
 			<column name="CREATED_ON" valueDate="${now}" />
 			<column name="CREATED_BY" value="SYSTEM" />
@@ -83,43 +84,42 @@
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_ID"	valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='MENU') " />
+			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
+			<column name="MENU_KEY" valueComputed="(SELECT KEY FROM MENU WHERE KEY ='MENU') " />
 		</insert>
 
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_ID"	valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='USER_ROLE') " />
+			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
+			<column name="MENU_KEY" valueComputed="(SELECT KEY FROM MENU WHERE KEY ='USER_ROLE') " />
 		</insert>
 
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_ID"	valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='MAP_MENU_TO_ROLE') " />
+			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
+			<column name="MENU_KEY" valueComputed="(SELECT KEY FROM MENU WHERE KEY ='MAP_MENU_TO_ROLE') " />
 		</insert>
 
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_ID"	valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='USER') " />
+			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
+			<column name="MENU_KEY" valueComputed="(SELECT KEY FROM MENU WHERE KEY ='USER') " />
 		</insert>
 
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_ID"	valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_ID" valueComputed="(SELECT ID FROM MENU WHERE KEY ='FINDING') " />
+			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
+			<column name="MENU_KEY" valueComputed="(SELECT KEY FROM MENU WHERE KEY ='FINDING') " />
 		</insert>
 		<insert tableName="USER_DETAILS">
-			<column name="ID" valueComputed="user_details_seq.NEXTVAL" />
 			<column name="USER_ID" value="ADMINM" />
 			<column name="USER_NAME" value="ADMIN" />
 			<column name="USER_ROLE_ID"
-				valueComputed="(SELECT ID FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
+				valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
 			<column name="CREATED_BY" value="SYSTEM" />
 			<column name="CREATED_ON" valueDate="${now}" />
 			<column name="USER_STATUS" value="ACTIVE" />
@@ -128,7 +128,6 @@
 				value="$2a$10$fbFrdHp0Ni2cx/K71FHs6uIg/gqPBqdaaCjR3/j1VWB3M.bwqeV7m" />
 		</insert>
 		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="Report" />
 			<column name="KEY" value="REPORT" />
 			<column name="URL" value="#" />
@@ -137,11 +136,10 @@
 		</insert>
 
 		<insert tableName="MENU">
-			<column name="ID" valueComputed="menu_seq.NEXTVAL" />
 			<column name="NAME" value="Audit Report" />
 			<column name="KEY" value="AUDIT_REPORT" />
 			<column name="URL" value="/report/audit-report" />
-			<column name="PARENT" valueComputed="(SELECT ID FROM MENU WHERE KEY='REPORT') " />
+			<column name="PARENT" valueComputed="(SELECT KEY FROM MENU WHERE KEY='REPORT') " />
 			<column name="DISPLAY_ORDER" value="2" />
 			<column name="STATUS" value="A" />
 		</insert>

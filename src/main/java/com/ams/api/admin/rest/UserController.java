@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ams.api.admin.entity.Menu;
 import com.ams.api.admin.model.AllUserResponse;
 import com.ams.api.admin.model.ChangePasswordRequest;
 import com.ams.api.admin.model.PasswordResendRequest;
@@ -26,8 +25,6 @@ import com.ams.api.admin.model.UserDTO;
 import com.ams.api.admin.model.UserUpdateRequest;
 import com.ams.api.admin.service.MenuService;
 import com.ams.api.admin.service.UserService;
-import com.ams.api.constants.MenuKeyEnum;
-import com.ams.exception.ResourceNotFoundException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -49,8 +46,6 @@ public class UserController {
 	@ApiOperation(value = "Create a menu.", notes = "Returns the newly created menu")
 	public UserDTO createUser(@RequestBody @Valid UserCreationRequest userCreationRequest) {
 
-		Menu userMenu = menuService.getMenuByKey(MenuKeyEnum.USER.menuKey())
-									.orElseThrow(() -> new ResourceNotFoundException(String.format("No Menu found with key%s",MenuKeyEnum.USER.menuKey())));
 			return new UserDTO(this.userService.createUser(userCreationRequest));
 	}
 
@@ -58,9 +53,6 @@ public class UserController {
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Update a user.", notes = "Returns the newly created menu")
 	public UserDTO updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
-		
-		Menu userMenu = menuService.getMenuByKey(MenuKeyEnum.USER.menuKey())
-				.orElseThrow(() -> new ResourceNotFoundException(String.format("No Menu found with key%s",MenuKeyEnum.USER.menuKey())));
 		
 			return new UserDTO(this.userService.updateUser(userUpdateRequest));
 	}
@@ -73,25 +65,21 @@ public class UserController {
 		return new AllUserResponse(allApprovedUser);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/{userId}")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Get a all user list", notes = "The User list")
-	public UserDTO getUserById(@PathVariable("id") long id,
+	public UserDTO getUserById(@PathVariable("userId") String userId,
 			@RequestParam(name = "status", required = false) String status) {
 
-		return new UserDTO(this.userService.getUser(id));
+		return new UserDTO(this.userService.getUser(userId));
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/delete/{userId}")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Delete a user ", notes = "The User list")
-	public ResponseEntity<Boolean> delete(@PathVariable("id") long id) {
+	public ResponseEntity<Boolean> delete(@PathVariable("userId") String userId) {
 	
-		Menu userMenu = menuService.getMenuByKey(MenuKeyEnum.USER.menuKey())
-				.orElseThrow(() -> new ResourceNotFoundException(String.format("No Menu found with key%s",MenuKeyEnum.USER.menuKey())));
-		
-		
-			this.userService.deleteUser(id);
+			this.userService.deleteUser(userId);
 		return ResponseEntity.ok().body(true);
 	}
 

@@ -40,7 +40,7 @@ public class UserRoleMenuMapping {
     private String action;
 
     @ManyToOne
-	@JoinColumn
+	@JoinColumn(name = "USER_ROLE_NAME")
     private UserRole userRole;
         
     @ManyToOne

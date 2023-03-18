@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import org.springframework.beans.BeanUtils;
 
 import com.ams.api.admin.model.MenuCreationRequest;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -28,7 +27,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@JsonInclude(Include.NON_NULL)
 @EqualsAndHashCode
 @Setter
 @Getter
@@ -42,18 +40,12 @@ public class Menu {
 		BeanUtils.copyProperties(menuCreationrequest, this);
 	}
 
-	@JsonIgnore
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "menu_generator")
-	@SequenceGenerator(name = "menu_generator", sequenceName = "menu_seq", allocationSize = 1)
-	private long id;
-
+	
 	@EqualsAndHashCode.Exclude
-	@JsonIgnore
 	@OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
 	List<UserRoleMenuMapping> linkedRoles;
 
-	@Column(nullable = false)
+	@Id
 	private String key;
 
 	@Column(nullable = false)
@@ -68,7 +60,6 @@ public class Menu {
 	@Column(nullable = false)
 	private String url;
 
-	@JsonIgnoreProperties({ "type", "url", "displayOrder", "status", "key" })
 	@ManyToOne()
 	@JoinColumn(name = "PARENT")
 	private Menu parent;

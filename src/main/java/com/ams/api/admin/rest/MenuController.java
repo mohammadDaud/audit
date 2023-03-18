@@ -65,13 +65,13 @@ public class MenuController {
 		return new AllMenuResponse(this.menuService.getAllParentMenu());
 	}
 
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/{key}")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Get a single menu.", notes = "You have to provide a valid menu ID.")
-	public MenuDTO getMenu(@ApiParam(value = "The ID of the User.", required = true) @PathVariable("id") Long id)
+	public MenuDTO getMenu(@ApiParam(value = "The ID of the User.", required = true) @PathVariable("key") String key)
 			throws Exception {
 
-		return new MenuDTO(this.menuService.getMenu(id));
+		return new MenuDTO(this.menuService.getMenu(key));
 	}
 
 	@GetMapping("/get-menu-group-by-parent/{flag}")

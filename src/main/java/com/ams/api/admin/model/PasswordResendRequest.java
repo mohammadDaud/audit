@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 public class PasswordResendRequest {
 	
-	private long[] userItems;
+	private String[] userItems;
 }

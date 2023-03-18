@@ -1,6 +1,7 @@
 package com.ams.api.admin.entity;
 
 import java.io.Serializable;
+import java.nio.CharBuffer;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -42,28 +43,22 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	public User(UserCreationRequest userCreationRequest) {
 		BeanUtils.copyProperties(userCreationRequest, this);
-		this.setPassword(new BCryptPasswordEncoder().encode(userCreationRequest.getPassword()));
+		this.setPassword(new BCryptPasswordEncoder().encode(CharBuffer.wrap(userCreationRequest.getPassword())));
 	}
 	public User(User oldUser) {
 		BeanUtils.copyProperties( oldUser, this);
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_details_generator")
-	@SequenceGenerator(name = "user_details_generator", sequenceName = "user_details_seq", allocationSize = 1)
-	private long id;
-
 	@ManyToOne()
 	@JoinColumn(name = "userRoleId")
 	private UserRole userRole;
 
+	@Id
 	@Column(nullable = false)
 	private String userId;
 
 	@Column(nullable = false)
 	private String userName;
-
-	private String userDescription;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -88,7 +83,5 @@ public class User implements Serializable{
 	private Date tokenExpiryDate;
 
 	private String password;
-	
-	private Boolean lockUser;
-	
+		
 }
