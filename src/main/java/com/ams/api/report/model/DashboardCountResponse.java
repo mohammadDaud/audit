@@ -10,9 +10,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DashboardCountVolumeResponse{
-	private String category;
-	private Double volume;
+public class DashboardCountResponse{
 	private String status;
 	private String count;
 }

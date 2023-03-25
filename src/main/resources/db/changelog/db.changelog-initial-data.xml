@@ -25,24 +25,11 @@
 			<column name="DISPLAY_ORDER" value="2" />
 			<column name="STATUS" value="A" />
 		</insert>
-
-		<insert tableName="MENU">
-			<column name="NAME" value="Menu" />
-			<column name="KEY" value="MENU" />
-			<column name="URL" value="/admin/menu/list" />
-			<column name="PARENT"
-				valueComputed="(SELECT KEY FROM MENU WHERE KEY='MY_ACCOUNT') " />
-			<column name="DISPLAY_ORDER" value="1" />
-			<column name="STATUS" value="A" />
-		
-		</insert>
-
 		<insert tableName="MENU">
 			<column name="NAME" value="USER ROLE" />
 			<column name="KEY" value="USER_ROLE" />
 			<column name="URL" value="/admin/user-role/list" />
-			<column name="PARENT"
-				valueComputed="(SELECT KEY FROM MENU WHERE KEY='MY_ACCOUNT') " />
+			<column name="PARENT"	value="MY_ACCOUNT"/>
 			<column name="DISPLAY_ORDER" value="2" />
 			<column name="STATUS" value="A" />
 		</insert>
@@ -51,8 +38,7 @@
 			<column name="NAME" value="Map Menu to Role" />
 			<column name="KEY" value="MAP_MENU_TO_ROLE" />
 			<column name="URL" value="/admin/role-menu-mapping" />
-			<column name="PARENT"
-				valueComputed="(SELECT KEY FROM MENU WHERE KEY='MY_ACCOUNT') " />
+			<column name="PARENT"	value="MY_ACCOUNT" />
 			<column name="DISPLAY_ORDER" value="3" />
 			<column name="STATUS" value="A" />
 		</insert>
@@ -61,7 +47,7 @@
 			<column name="NAME" value="USER" />
 			<column name="KEY" value="USER" />
 			<column name="URL" value="/admin/user/list" />
-			<column name="PARENT" valueComputed="(SELECT KEY FROM MENU WHERE KEY='MY_ACCOUNT') " />
+			<column name="PARENT" value="MY_ACCOUNT" />
 			<column name="DISPLAY_ORDER" value="4" />
 			<column name="STATUS" value="A" />
 		</insert>
@@ -70,7 +56,7 @@
 			<column name="NAME" value="FINDING" />
 			<column name="KEY" value="FINDING" />
 			<column name="URL" value="/admin/finding/add" />
-			<column name="PARENT" valueComputed="(SELECT KEY FROM MENU WHERE KEY='ISSUE') " />
+			<column name="PARENT" value="ISSUE" />
 			<column name="DISPLAY_ORDER" value="1" />
 			<column name="STATUS" value="A" />
 		</insert>
@@ -85,35 +71,28 @@
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
 			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_KEY" valueComputed="(SELECT KEY FROM MENU WHERE KEY ='MENU') " />
+			<column name="MENU_KEY" value="USER_ROLE" />
 		</insert>
 
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
 			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_KEY" valueComputed="(SELECT KEY FROM MENU WHERE KEY ='USER_ROLE') " />
+			<column name="MENU_KEY" value="MAP_MENU_TO_ROLE" />
 		</insert>
 
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
 			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_KEY" valueComputed="(SELECT KEY FROM MENU WHERE KEY ='MAP_MENU_TO_ROLE') " />
+			<column name="MENU_KEY" value="USER" />
 		</insert>
 
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
 			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_KEY" valueComputed="(SELECT KEY FROM MENU WHERE KEY ='USER') " />
-		</insert>
-
-		<insert tableName="ROLE_PRIVILEGE">
-			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
-			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
-			<column name="MENU_KEY" valueComputed="(SELECT KEY FROM MENU WHERE KEY ='FINDING') " />
+			<column name="MENU_KEY" value="FINDING" />
 		</insert>
 		<insert tableName="USER_DETAILS">
 			<column name="USER_ID" value="ADMINM" />
@@ -139,7 +118,7 @@
 			<column name="NAME" value="Audit Report" />
 			<column name="KEY" value="AUDIT_REPORT" />
 			<column name="URL" value="/report/audit-report" />
-			<column name="PARENT" valueComputed="(SELECT KEY FROM MENU WHERE KEY='REPORT') " />
+			<column name="PARENT" value="REPORT" />
 			<column name="DISPLAY_ORDER" value="2" />
 			<column name="STATUS" value="A" />
 		</insert>

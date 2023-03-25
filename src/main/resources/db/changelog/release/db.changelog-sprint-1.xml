@@ -35,8 +35,8 @@
 			<column name="IMAGE_URL" type="varchar(100)" />
 		</createTable>
 
-		<addPrimaryKey columnNames="KEY" constraintName="PK_MENU"
-			tableName="MENU" validate="true" />
+		<addPrimaryKey columnNames="KEY"
+			constraintName="PK_MENU" tableName="MENU" validate="true" />
 
 		<addForeignKeyConstraint
 			baseColumnNames="PARENT" baseTableName="MENU"
@@ -48,7 +48,7 @@
 	<changeSet author="ams" id="US-5">
 
 		<createTable tableName="USER_ROLE">
-			<column name="ROLE_NAME" type="varchar(100)"/>
+			<column name="ROLE_NAME" type="varchar(100)" />
 			<column name="DESCRIPTION" type="varchar(255)" />
 			<column name="CREATED_BY" type="varchar(255)">
 				<constraints nullable="false" />
@@ -86,8 +86,9 @@
 
 		<addForeignKeyConstraint
 			baseColumnNames="USER_ROLE_NAME" baseTableName="ROLE_PRIVILEGE"
-			constraintName="FK_PRIVILEGE_USER_ROLE_ID" referencedColumnNames="ROLE_NAME"
-			referencedTableName="USER_ROLE" validate="true" />
+			constraintName="FK_PRIVILEGE_USER_ROLE_ID"
+			referencedColumnNames="ROLE_NAME" referencedTableName="USER_ROLE"
+			validate="true" />
 
 		<addForeignKeyConstraint
 			baseColumnNames="MENU_KEY" baseTableName="ROLE_PRIVILEGE"
@@ -101,7 +102,7 @@
 
 	<changeSet author="ams" id="US-6">
 		<createTable tableName="USER_DETAILS">
-			<column name="USER_ID" type="varchar(15)"/>
+			<column name="USER_ID" type="varchar(15)" />
 			<column name="USER_NAME" type="varchar(255)">
 				<constraints nullable="false"
 					uniqueConstraintName="UQ_USER-DETAILS_USER_NAME" unique="true" />
@@ -130,36 +131,37 @@
 			<column name="TOKEN" type="VARCHAR2(250)" />
 			<column name="IS_LOGIN" type="boolean" value="0" />
 		</createTable>
-		
-		<addPrimaryKey columnNames="USER_ID" constraintName="PK_USER"
-			tableName="USER_DETAILS" validate="true" />
+
+		<addPrimaryKey columnNames="USER_ID"
+			constraintName="PK_USER" tableName="USER_DETAILS" validate="true" />
 
 		<addForeignKeyConstraint
 			baseColumnNames="USER_ROLE_ID" baseTableName="USER_DETAILS"
-			constraintName="FK_USER_TEMP_ROLE_NAME" referencedColumnNames="ROLE_NAME"
-			referencedTableName="USER_ROLE" validate="true" />
+			constraintName="FK_USER_TEMP_ROLE_NAME"
+			referencedColumnNames="ROLE_NAME" referencedTableName="USER_ROLE"
+			validate="true" />
 
 
 		<createSequence sequenceName="user_details_seq"
 			startValue="1" minValue="1" maxValue="100000000000" incrementBy="1"
 			cycle="false" />
-		
+
 	</changeSet>
-	
+
 	<changeSet author="ams" id="ISSUES">
 		<createTable tableName="ISSUES">
-			<column name="ISSUE_NO" type="varchar(100)"/>
-			<column name="ISSUE_DESCRIPTION" type="varchar(100)"/>
+			<column name="ISSUE_NO" type="varchar(100)" />
+			<column name="ISSUE_DESCRIPTION" type="varchar(100)" />
 			<column name="RISK_RATING" type="varchar(255)" />
-			<column name="DEPARTMENT" type="varchar(100)"/>
-			<column name="AUDIT_YEAR" type="NUMBER(10)"/>
-			<column name="RESPONSIBLE_PERSON" type="varchar(100)"/>
-			<column name="ACTION_PLAN" type="varchar(100)"/>
-			<column name="EVIDENCE_NAME" type="varchar(100)"/>
-			<column name="ACTION_DATE" type="DATE"/>
-			<column name="STATUS" type="varchar(100)"/>
-			<column name="NO_OF_EXTENSION" type="NUMBER(10)"/>
-			<column name="FOLLOW_UP_RESPONSE" type="varchar(100)"/>
+			<column name="DEPARTMENT" type="varchar(100)" />
+			<column name="AUDIT_YEAR" type="NUMBER(10)" />
+			<column name="RESPONSIBLE_PERSON" type="varchar(100)" />
+			<column name="ACTION_PLAN" type="varchar(100)" />
+			<column name="EVIDENCE_NAME" type="varchar(100)" />
+			<column name="ACTION_DATE" type="DATE" />
+			<column name="STATUS" type="varchar(100)" />
+			<column name="NO_OF_EXTENSION" type="NUMBER(10)" />
+			<column name="FOLLOW_UP_RESPONSE" type="varchar(100)" />
 			<column name="CREATED_BY" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
@@ -169,9 +171,15 @@
 			<column name="MODIFIED_BY" type="varchar(255)" />
 			<column name="MODIFIED_ON" type="DATE" />
 		</createTable>
-		
-		<addPrimaryKey columnNames="ISSUE_NO" constraintName="PK_ISSUES"
-			tableName="ISSUES" validate="true" />
-		
+
+		<addPrimaryKey columnNames="ISSUE_NO"
+			constraintName="PK_ISSUES" tableName="ISSUES" validate="true" />
+
+	</changeSet>
+	<changeSet author="ams" id="VW_FINDING_COUNT">
+		<sql> create or replace view
+		VW_FINDING_COUNT as
+			SELECT * FROM ISSUES
+		</sql>
 	</changeSet>
 </databaseChangeLog>

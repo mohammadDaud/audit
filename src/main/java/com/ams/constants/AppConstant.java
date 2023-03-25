@@ -19,4 +19,7 @@ public interface AppConstant {
 	interface EMAIL_TEMPLATES{
 		String ISSUE_CREATION_EMAIL_TEMPLATE = "issueCreationEmail";
 	}
+	interface QUERY_CONSTANTS{
+		String getAllFindingCount = "SELECT status, count(*) AS count FROM VW_FINDING_COUNT group by status";
+	}
 }
