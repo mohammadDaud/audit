@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.BeanUtils;
 
+import com.ams.common.entity.AuditTrailLog;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +15,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AuditReportResponse {
 	
-//	public AuditReportResponse(AuditTrailLog auditTrailLog){
-//		BeanUtils.copyProperties(auditTrailLog, this);		
-//	}
+	public AuditReportResponse(AuditTrailLog auditTrailLog){
+		BeanUtils.copyProperties(auditTrailLog, this);		
+	}
 	
 	private String moduleName;
 

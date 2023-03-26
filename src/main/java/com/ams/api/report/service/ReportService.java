@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.criteria.Predicate;
 
 import org.apache.logging.log4j.util.Strings;
-import org.kie.api.runtime.manager.audit.AuditService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
@@ -18,7 +17,10 @@ import org.springframework.stereotype.Service;
 import com.ams.api.admin.entity.User;
 import com.ams.api.admin.entity.UserLoginHistory;
 import com.ams.api.admin.repository.UserLoginHistoryRepository;
+import com.ams.api.report.model.AuditReportRequest;
 import com.ams.api.report.model.UserLoginHistoryRequest;
+import com.ams.common.entity.AuditTrailLog;
+import com.ams.common.service.AuditService;
 import com.ams.common.service.MessageSourceService;
 import com.ams.exception.ApplicationException;
 
@@ -29,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class ReportService {
 
 	private final UserLoginHistoryRepository userLoginHistoryRepository;
+	private final AuditService auditService;
 	private final MessageSourceService messageSource;
 
 	public List<UserLoginHistory> getUserLoginHistory(UserLoginHistoryRequest request) {
@@ -74,6 +77,9 @@ public class ReportService {
 			         return builder.and(predicates.toArray(new Predicate[predicates.size()]));
 			    };
 			};
+			public List<AuditTrailLog> getAuditTrails(AuditReportRequest request) {	
+				return auditService.getAuditTrailLog(request);
+			}
 
 //	public List<AuditTrailLog> getAuditTrails(AuditReportRequest request) {	
 //		return auditService.getAuditTrailLog(request);

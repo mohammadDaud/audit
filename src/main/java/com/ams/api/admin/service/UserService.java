@@ -162,7 +162,7 @@ public class UserService {
 	public Optional<User> getUserByEmailAndUserId(String email, String userId) {
 		return userRepository.findByUserEmailIgnoreCaseAndUserId(email, userId);
 	}
-	@Cacheable(cacheNames = USER)
+	//@Cacheable(cacheNames = USER)
 	public List<UserDTO> getAllUser() {
 		return userRepository.findAll(Sort.by(Sort.Direction.ASC, "userId")).stream().map(UserDTO::new)
 				.collect(Collectors.toList());

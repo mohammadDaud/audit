@@ -1,23 +1,16 @@
 package com.ams.api.admin.service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import com.ams.Utility.AppUtil;
 import com.ams.Utility.DateUtils;
 import com.ams.api.admin.entity.Issue;
 import com.ams.api.admin.entity.User;
 import com.ams.api.admin.model.IssueCreationRequest;
-import com.ams.api.admin.model.UserCreationRequest;
 import com.ams.api.admin.repository.ForgotPasswordVerificationRepository;
 import com.ams.api.admin.repository.IssueRepository;
 import com.ams.api.admin.repository.PasswordHistoryRepository;
@@ -27,7 +20,6 @@ import com.ams.api.admin.repository.UserRoleRepository;
 import com.ams.common.service.EmailService;
 import com.ams.common.service.MessageSourceService;
 import com.ams.constants.AppConstant;
-import com.ams.exception.ApplicationException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -44,6 +36,7 @@ public class IssueService {
 	private final UserRoleRepository userRoleRepository;
 	private final PasswordTokenRepository passwordTokenRepository;
 	private final EmailService emailService;
+	private final UserService userService;
 	private final UserLoginHistoryRepository userLoginHistoryRepository;
 	private final PasswordHistoryRepository passwordHistoryRepository;
 	private final ForgotPasswordVerificationRepository forgotPasswordVerificationRepository;
@@ -87,9 +80,7 @@ public class IssueService {
 	}
 
 	private User getUserDetailsFromLDAP(String responsiblePerson) {
-		User user = new User();
-		user.setUserEmail("khanshakil21@gmail.com");
-		return user;
+		return userService.getUser(responsiblePerson);
 	}
 
 	public void sendEmail(User user, Issue issue) {

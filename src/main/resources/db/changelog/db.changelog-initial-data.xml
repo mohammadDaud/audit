@@ -70,35 +70,34 @@
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
+			<column name="USER_ROLE_NAME"	value="ADMIN" />
 			<column name="MENU_KEY" value="USER_ROLE" />
 		</insert>
 
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
+			<column name="USER_ROLE_NAME"	value="ADMIN" />
 			<column name="MENU_KEY" value="MAP_MENU_TO_ROLE" />
 		</insert>
 
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
+			<column name="USER_ROLE_NAME"	value="ADMIN" />
 			<column name="MENU_KEY" value="USER" />
 		</insert>
 
 		<insert tableName="ROLE_PRIVILEGE">
 			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
 			<column name="ACTION" value="A,E,D"/>
-			<column name="USER_ROLE_NAME"	valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
+			<column name="USER_ROLE_NAME"	value="ADMIN" />
 			<column name="MENU_KEY" value="FINDING" />
 		</insert>
 		<insert tableName="USER_DETAILS">
 			<column name="USER_ID" value="ADMINM" />
 			<column name="USER_NAME" value="ADMIN" />
-			<column name="USER_ROLE_ID"
-				valueComputed="(SELECT ROLE_NAME FROM USER_ROLE WHERE ROLE_NAME='ADMIN') " />
+			<column name="USER_ROLE_ID"		value="ADMIN" />
 			<column name="CREATED_BY" value="SYSTEM" />
 			<column name="CREATED_ON" valueDate="${now}" />
 			<column name="USER_STATUS" value="ACTIVE" />
@@ -121,6 +120,13 @@
 			<column name="PARENT" value="REPORT" />
 			<column name="DISPLAY_ORDER" value="2" />
 			<column name="STATUS" value="A" />
+		</insert>
+
+		<insert tableName="ROLE_PRIVILEGE">
+			<column name="ID" valueComputed="role_privilege_seq.NEXTVAL" />
+			<column name="ACTION" value="A,E,D"/>
+			<column name="USER_ROLE_NAME"	value="ADMIN" />
+			<column name="MENU_KEY" value="AUDIT_REPORT" />
 		</insert>
 
 	</changeSet>

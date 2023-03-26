@@ -4,13 +4,21 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ams.api.admin.entity.Menu;
 import com.ams.api.admin.model.IssueCreationRequest;
+import com.ams.api.admin.model.UserDTO;
+import com.ams.api.admin.model.UserUpdateRequest;
 import com.ams.api.admin.service.IssueService;
+import com.ams.api.constants.AuditMatrix;
+import com.ams.api.constants.MenuKeyEnum;
+import com.ams.common.service.AuditService;
+import com.ams.exception.ResourceNotFoundException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,19 +33,19 @@ import lombok.extern.log4j.Log4j2;
 public class IssueController {
 
 	private final IssueService issueService;
-
+	private final AuditService auditService;
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "Create a Issue.", notes = "Issue")
-	public void createUser(@RequestBody @Valid IssueCreationRequest userCreationRequest) {
-
+	public void creatIssue(@RequestBody @Valid IssueCreationRequest userCreationRequest) {
 		this.issueService.createIssue(userCreationRequest);
+		this.auditService.logAudit(userCreationRequest.getIssueNo(), "", userCreationRequest, AuditMatrix.ISSUE_ADD);
 	}
 
 //	@PutMapping("/update")
 //	@ResponseStatus(HttpStatus.OK)
 //	@ApiOperation(value = "Update a user.", notes = "Returns the newly created menu")
-//	public UserDTO updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
+//	public UserDTO updateIssue(@RequestBody UserUpdateRequest userUpdateRequest) {
 //
 //		Menu userMenu = menuService.getMenuByKey(MenuKeyEnum.USER.menuKey())
 //				.orElseThrow(() -> new ResourceNotFoundException(

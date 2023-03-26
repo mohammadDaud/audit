@@ -2,29 +2,32 @@ package com.ams.api.constants;
 
 public enum AuditMatrix {
 
-	USER_ADD("USER","USER_DETAILS", "ADD"),
-	USER_UPDATE("USER","USER_DETAILS", "UPDATE"),
-	USER_DELETE("USER","USER_DETAILS", "DELETE");
+	ISSUE_ADD("ISSUE","ADD"),
+	ISSUE_UPDATE("ISSUE","UPDATE"),
+	ISSUE_DELETE("ISSUE","DELETE");
 
-	private String menuKey;
-	private String table;
+	private String module;
 	private String action;
 	
-	AuditMatrix(String menuKey, String table, String action) {
-		this.menuKey = menuKey;
-		this.table = table;
+	AuditMatrix(String module, String action) {
+		this.module = module;
 		this.action = action;
 	}
 
-	public String menuKey() {
-		return this.menuKey;
+	public String getModule() {
+		return module;
 	}
 
-	public String table() {
-		return this.table;
+	public void setModule(String module) {
+		this.module = module;
 	}
 
-	public String action() {
-		return this.action;
+	public String getAction() {
+		return action;
 	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+	
 }
